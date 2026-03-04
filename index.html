@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RP News & Registration</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0e0e0e;
+    color: white;
+}
+
+header {
+    background: #111;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left, .right {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.left {
+    flex: 2;
+    min-width: 300px;
+}
+
+.right {
+    flex: 1;
+    min-width: 250px;
+    background: #1a1a1a;
+    border-left: 1px solid #333;
+}
+
+.news-item {
+    background: #222;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid lime;
+}
+
+.news-item h4 {
+    margin: 0 0 5px 0;
+}
+
+.news-item p {
+    margin: 0;
+    font-size: 14px;
+}
+
+iframe {
+    width: 100%;
+    border: none;
+}
+
+/* Кнопка */
+.button {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.button:hover {
+    background: #0056b3;
+}
+
+/* Прогресс-бары */
+.progress-bar {
+    width: 100%;
+    background: #333;
+    margin-top: 5px;
+}
+
+.progress-fill {
+    height: 10px;
+    width: 0%;
+    background: lime;
+}
+</style>
+</head>
+
+<body>
+
+<header>RP News & Registration</header>
+
+<div class="container">
+    <!-- Левая колонка: новости -->
+    <div class="left">
+        <h3>Новости RP проекта</h3>
+        <div class="news-item">
+            <h4>Событие 1: Бонусные выплаты!</h4>
+            <p>Сегодня в 18:00 всем зарегистрированным игрокам начислены RP-бонусы.</p>
+        </div>
+        <div class="news-item">
+            <h4>Событие 2: Новая миссия</h4>
+            <p>Началась миссия “Захват территории”. Участвуй и получай награды.</p>
+        </div>
+        <div class="news-item">
+            <h4>Событие 3: Обновление</h4>
+            <p>Добавлен новый функционал, теперь можно видеть прогресс RP в реальном времени.</p>
+        </div>
+    </div>
+
+    <!-- Правая колонка: форма регистрации -->
+    <div class="right">
+        <h3>Регистрация на выплаты</h3>
+        <p>Введите свои данные для участия:</p>
+        <!-- Вставь сюда ссылку на свою Google Form -->
+        <iframe src="https://docs.google.com/forms/d/e/ВАШ-FORM-ID/viewform?embedded=true" height="500"></iframe>
+
+        <h4>Прогресс RP</h4>
+        <div class="progress-bar">
+            <div id="rpProgress" class="progress-fill"></div>
+        </div>
+        <div class="button" onclick="increaseProgress()">Получить RP</div>
+    </div>
+</div>
+
+<script>
+let rp = 0;
+function increaseProgress() {
+    rp += 10;
+    if(rp > 100) rp = 100;
+    document.getElementById("rpProgress").style.width = rp + "%";
+    alert("Твой RP увеличен на 10 единиц!");
+}
+</script>
+
+</body>
+</html>
