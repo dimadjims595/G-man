@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости | San Andreas Gov</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+    <!-- Навигация -->
+    <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <i data-lucide="shield" class="text-[#f1c40f]"></i>
+                <span class="font-black text-xl uppercase tracking-tighter">State Portal</span>
+            </div>
+            <div class="hidden lg:flex items-center space-x-4">
+                <a href="index.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Главная</a>
+                <a href="news.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Новости</a>
+                <a href="registration.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Регистрация ID</a>
+                <a href="citizens.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Граждане</a>
+                <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Бизнесы</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 flex-grow w-full space-y-8">
+        <div class="border-b border-slate-200 pb-6">
+            <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Пресс-служба штата</h2>
+            <p class="text-slate-500 mt-2">Официальные сводки и важные объявления правительства.</p>
+        </div>
+
+        <!-- Список новостей -->
+        <div class="grid gap-6">
+            <!-- Новость 1 -->
+            <div class="bg-white p-8 rounded-3xl border-l-8 border-[#f1c40f] shadow-sm hover:shadow-md transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="px-3 py-1 bg-amber-100 text-[#002868] text-[10px] font-black uppercase tracking-widest rounded-full">Экономика</span>
+                    <span class="text-xs font-mono text-slate-400">05 МАРТА 2026</span>
+                </div>
+                <h4 class="text-2xl font-bold text-slate-900 mb-3">Гранты для предпринимателей</h4>
+                <p class="text-slate-600 leading-relaxed">Губернатор подписал указ о выделении $1,000,000 на поддержку малого бизнеса в Палето-Бэй. Заявки принимаются через департамент финансов.</p>
+            </div>
+
+            <!-- Новость 2 -->
+            <div class="bg-white p-8 rounded-3xl border-l-8 border-blue-600 shadow-sm hover:shadow-md transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-widest rounded-full">Безопасность</span>
+                    <span class="text-xs font-mono text-slate-400">04 МАРТА 2026</span>
+                </div>
+                <h4 class="text-2xl font-bold text-slate-900 mb-3">Усиление патрулей в гетто</h4>
+                <p class="text-slate-600 leading-relaxed">В связи с участившимися случаями правонарушений, LSPD вводит режим повышенной готовности в южных районах города.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
