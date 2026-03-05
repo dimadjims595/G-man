@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реестр граждан | San Andreas Gov</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+    <!-- Навигация -->
+    <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <i data-lucide="shield" class="text-[#f1c40f]"></i>
+                <span class="font-black text-xl uppercase tracking-tighter">State Portal</span>
+            </div>
+            <div class="hidden lg:flex items-center space-x-4">
+                <a href="index.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Главная</a>
+                <a href="news.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Новости</a>
+                <a href="registration.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Регистрация ID</a>
+                <a href="citizens.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Граждане</a>
+                <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">Бизнесы</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+            <div>
+                <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Реестр жителей</h2>
+                <p class="text-slate-500 mt-2">Список официально зарегистрированных лиц в штате.</p>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-[2rem] shadow-xl border border-slate-200 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 border-b border-slate-100">
+                    <tr>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">CID (Номер)</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Имя Фамилия</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Должность</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Статус</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-8 py-6 font-mono text-[#002868] font-bold text-sm">#1001</td>
+                        <td class="px-8 py-6 font-bold text-slate-900">John Doe</td>
+                        <td class="px-8 py-6 text-slate-600 text-sm">Губернатор штата</td>
+                        <td class="px-8 py-6"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Действующий</span></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-8 py-6 font-mono text-[#002868] font-bold text-sm">#1002</td>
+                        <td class="px-8 py-6 font-bold text-slate-900">Sarah Miller</td>
+                        <td class="px-8 py-6 text-slate-600 text-sm">Верховный судья</td>
+                        <td class="px-8 py-6"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Действующий</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
