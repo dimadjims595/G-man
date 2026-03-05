@@ -51,59 +51,76 @@
     <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full space-y-16">
         
         <!-- Приветственная секция -->
-        <section class="relative h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-900">
+        <section class="relative h-[450px] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-900">
             <img src="https://picsum.photos/seed/sanandreas/1920/1080" class="absolute inset-0 w-full h-full object-cover opacity-50">
             <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
                 <div class="bg-[#f1c40f] p-4 rounded-full mb-8 shadow-lg">
                     <i data-lucide="shield-check" class="w-12 h-12 text-[#002868]"></i>
                 </div>
                 <h1 class="text-5xl md:text-7xl font-black text-white mb-6 uppercase tracking-tighter drop-shadow-2xl">Правительство штата</h1>
-                <p class="text-xl md:text-2xl text-white/90 max-w-3xl font-light leading-relaxed">Добро пожаловать на официальный ресурс штата San Andreas.</p>
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl font-light leading-relaxed">Официальный цифровой портал для жителей и предпринимателей San Andreas.</p>
             </div>
         </section>
 
-        <!-- Кликабельные разделы -->
-        <div class="grid md:grid-cols-3 gap-8">
-            <a href="laws.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+        <!-- 4 Ключевых раздела -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Новости -->
+            <a href="news.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#002868] transition-colors">
-                    <i data-lucide="landmark" class="text-[#002868] group-hover:text-white transition-colors"></i>
+                    <i data-lucide="newspaper" class="text-[#002868] group-hover:text-white transition-colors"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-3">Законодательство</h3>
-                <p class="text-slate-500 leading-relaxed">Ознакомьтесь с актуальными кодексами, указами губернатора и правилами штата.</p>
-                <div class="mt-6 flex items-center text-[#002868] font-bold text-sm uppercase tracking-widest gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Перейти <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </div>
-            </a>
-
-            <a href="jobs.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#f1c40f] transition-colors">
-                    <i data-lucide="briefcase" class="text-[#f1c40f] group-hover:text-[#002868] transition-colors"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-3">Трудоустройство</h3>
-                <p class="text-slate-500 leading-relaxed">Подайте заявку на работу в государственные структуры: LSPD, EMS, GOV.</p>
-                <div class="mt-6 flex items-center text-[#f1c40f] font-bold text-sm uppercase tracking-widest gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Перейти <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <h3 class="text-xl font-bold mb-3">Новости</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Последние указы, события и важные объявления штата.</p>
+                <div class="mt-6 flex items-center text-[#002868] font-bold text-xs uppercase tracking-widest gap-2">
+                    Читать <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </div>
             </a>
 
+            <!-- Регистрация ID -->
             <a href="registration.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors">
                     <i data-lucide="file-signature" class="text-emerald-600 group-hover:text-white transition-colors"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-3">Получение ID</h3>
-                <p class="text-slate-500 leading-relaxed">Подать заявление на получение гражданства и идентификационной карты штата.</p>
-                <div class="mt-6 flex items-center text-emerald-600 font-bold text-sm uppercase tracking-widest gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <h3 class="text-xl font-bold mb-3">Регистрация ID</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Подача заявления на получение гражданства и ID-карты.</p>
+                <div class="mt-6 flex items-center text-emerald-600 font-bold text-xs uppercase tracking-widest gap-2">
                     Подать заявку <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </div>
             </a>
+
+            <!-- Список граждан -->
+            <a href="citizens.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                    <i data-lucide="users" class="text-purple-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Граждане</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Публичный реестр всех официально зарегистрированных жителей.</p>
+                <div class="mt-6 flex items-center text-purple-600 font-bold text-xs uppercase tracking-widest gap-2">
+                    Открыть реестр <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+            </a>
+
+            <!-- Бизнесы -->
+            <a href="business.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#f1c40f] transition-colors">
+                    <i data-lucide="building-2" class="text-[#f1c40f] group-hover:text-[#002868] transition-colors"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Бизнесы</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Коммерческий реестр предприятий и их владельцев.</p>
+                <div class="mt-6 flex items-center text-[#f1c40f] font-bold text-xs uppercase tracking-widest gap-2">
+                    Просмотреть <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+            </a>
+
         </div>
     </main>
 
-    <footer class="bg-slate-900 text-white py-16">
+    <footer class="bg-slate-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div class="flex items-center justify-center gap-3 mb-6 text-[#f1c40f]">
-                <i data-lucide="shield" class="w-10 h-10"></i>
-                <span class="font-black text-2xl uppercase tracking-tighter text-white">State RP Project</span>
+                <i data-lucide="shield" class="w-8 h-8"></i>
+                <span class="font-black text-xl uppercase tracking-tighter text-white">State RP Project</span>
             </div>
             <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
         </div>
