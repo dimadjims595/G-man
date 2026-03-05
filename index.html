@@ -9,15 +9,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .nav-link.active { background: rgba(255,255,255,0.15); color: #f1c40f; border-bottom: 2px solid #f1c40f; }
-        .nav-link { border-bottom: 2px solid transparent; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
 
-    <!-- Шапка сайта -->
+    <!-- Навигация -->
     <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between h-20">
@@ -31,286 +27,88 @@
                     </div>
                 </div>
                 
-                <!-- Меню (Десктоп) -->
                 <div class="hidden lg:flex items-center space-x-1">
-                    <button onclick="showTab('main', this)" class="nav-link active px-4 py-7 text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
+                    <a href="index.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest flex items-center gap-2">
                         <i data-lucide="home" class="w-4 h-4"></i> Главная
-                    </button>
-                    <button onclick="showTab('news', this)" class="nav-link px-4 py-7 text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
+                    </a>
+                    <a href="news.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
                         <i data-lucide="newspaper" class="w-4 h-4"></i> Новости
-                    </button>
-                    <button onclick="showTab('reg', this)" class="nav-link px-4 py-7 text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
+                    </a>
+                    <a href="registration.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
                         <i data-lucide="file-text" class="w-4 h-4"></i> Регистрация ID
-                    </button>
-                    <button onclick="showTab('citizens', this)" class="nav-link px-4 py-7 text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
+                    </a>
+                    <a href="citizens.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
                         <i data-lucide="users" class="w-4 h-4"></i> Граждане
-                    </button>
-                    <button onclick="showTab('business', this)" class="nav-link px-4 py-7 text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
+                    </a>
+                    <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2">
                         <i data-lucide="building-2" class="w-4 h-4"></i> Бизнесы
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full space-y-16">
         
-        <!-- ВКЛАДКА: ГЛАВНАЯ -->
-        <div id="main" class="tab-content active space-y-16">
-            <section class="relative h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-900">
-                <img src="https://picsum.photos/seed/sanandreas/1920/1080" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105 hover:scale-100 transition-transform duration-1000">
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-                    <div class="bg-[#f1c40f] p-4 rounded-full mb-8 shadow-lg animate-bounce">
-                        <i data-lucide="shield-check" class="w-12 h-12 text-[#002868]"></i>
-                    </div>
-                    <h1 class="text-5xl md:text-7xl font-black text-white mb-6 uppercase tracking-tighter drop-shadow-2xl">Правительство штата</h1>
-                    <p class="text-xl md:text-2xl text-white/90 max-w-3xl font-light leading-relaxed">Единый центр государственных услуг, правопорядка и гражданской регистрации San Andreas.</p>
+        <!-- Приветственная секция -->
+        <section class="relative h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-900">
+            <img src="https://picsum.photos/seed/sanandreas/1920/1080" class="absolute inset-0 w-full h-full object-cover opacity-50">
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                <div class="bg-[#f1c40f] p-4 rounded-full mb-8 shadow-lg">
+                    <i data-lucide="shield-check" class="w-12 h-12 text-[#002868]"></i>
                 </div>
-            </section>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#002868] transition-colors">
-                        <i data-lucide="landmark" class="text-[#002868] group-hover:text-white transition-colors"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">Законодательство</h3>
-                    <p class="text-slate-500 leading-relaxed">Ознакомьтесь с актуальными кодексами, указами губернатора и правилами штата.</p>
-                </div>
-                <div class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                    <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#f1c40f] transition-colors">
-                        <i data-lucide="briefcase" class="text-[#f1c40f] group-hover:text-[#002868] transition-colors"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">Трудоустройство</h3>
-                    <p class="text-slate-500 leading-relaxed">Подайте заявку на работу в государственные структуры: LSPD, EMS, GOV.</p>
-                </div>
-                <div class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                    <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors">
-                        <i data-lucide="map-pin" class="text-emerald-600 group-hover:text-white transition-colors"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">Инфраструктура</h3>
-                    <p class="text-slate-500 leading-relaxed">Карта важных объектов, департаментов и зон общественного пользования.</p>
-                </div>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 uppercase tracking-tighter drop-shadow-2xl">Правительство штата</h1>
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl font-light leading-relaxed">Добро пожаловать на официальный ресурс штата San Andreas.</p>
             </div>
+        </section>
+
+        <!-- Кликабельные разделы -->
+        <div class="grid md:grid-cols-3 gap-8">
+            <a href="laws.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#002868] transition-colors">
+                    <i data-lucide="landmark" class="text-[#002868] group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">Законодательство</h3>
+                <p class="text-slate-500 leading-relaxed">Ознакомьтесь с актуальными кодексами, указами губернатора и правилами штата.</p>
+                <div class="mt-6 flex items-center text-[#002868] font-bold text-sm uppercase tracking-widest gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Перейти <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+            </a>
+
+            <a href="jobs.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#f1c40f] transition-colors">
+                    <i data-lucide="briefcase" class="text-[#f1c40f] group-hover:text-[#002868] transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">Трудоустройство</h3>
+                <p class="text-slate-500 leading-relaxed">Подайте заявку на работу в государственные структуры: LSPD, EMS, GOV.</p>
+                <div class="mt-6 flex items-center text-[#f1c40f] font-bold text-sm uppercase tracking-widest gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Перейти <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+            </a>
+
+            <a href="registration.html" class="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors">
+                    <i data-lucide="file-signature" class="text-emerald-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">Получение ID</h3>
+                <p class="text-slate-500 leading-relaxed">Подать заявление на получение гражданства и идентификационной карты штата.</p>
+                <div class="mt-6 flex items-center text-emerald-600 font-bold text-sm uppercase tracking-widest gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Подать заявку <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+            </a>
         </div>
-
-        <!-- ВКЛАДКА: НОВОСТИ -->
-        <div id="news" class="tab-content space-y-8">
-            <div class="border-b border-slate-200 pb-6">
-                <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Пресс-служба штата</h2>
-                <p class="text-slate-500 mt-2">Официальные сводки и важные объявления.</p>
-            </div>
-            <div class="grid gap-6">
-                <div class="bg-white p-8 rounded-3xl border-l-8 border-[#f1c40f] shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="px-3 py-1 bg-amber-100 text-[#002868] text-[10px] font-black uppercase tracking-widest rounded-full">Экономика</span>
-                        <span class="text-xs font-mono text-slate-400">05 МАРТА 2026</span>
-                    </div>
-                    <h4 class="text-2xl font-bold text-slate-900 mb-3">Гранты для предпринимателей</h4>
-                    <p class="text-slate-600 leading-relaxed">Губернатор подписал указ о выделении $1,000,000 на поддержку малого бизнеса в Палето-Бэй. Заявки принимаются через департамент финансов.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border-l-8 border-blue-600 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-widest rounded-full">Безопасность</span>
-                        <span class="text-xs font-mono text-slate-400">04 МАРТА 2026</span>
-                    </div>
-                    <h4 class="text-2xl font-bold text-slate-900 mb-3">Усиление патрулей в гетто</h4>
-                    <p class="text-slate-600 leading-relaxed">В связи с участившимися случаями правонарушений, LSPD вводит режим повышенной готовности в южных районах города.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ВКЛАДКА: РЕГИСТРАЦИЯ -->
-        <div id="reg" class="tab-content">
-            <div class="max-w-4xl mx-auto bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-200">
-                <div class="bg-[#002868] p-6 text-white flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="file-signature" class="text-[#f1c40f]"></i>
-                        <span class="font-bold uppercase tracking-widest text-sm">Регистрация ID-карты</span>
-                    </div>
-                    <span class="text-[10px] font-mono opacity-60">FORM: SA-ID-2026</span>
-                </div>
-                <div class="p-10">
-                    <div class="mb-10 text-center">
-                        <h3 class="text-3xl font-black text-slate-900 mb-4 uppercase tracking-tighter">Анкета гражданина</h3>
-                        <p class="text-slate-500 max-w-xl mx-auto">Заполните форму ниже. После проверки данных Департаментом Юстиции, вам будет назначена встреча в Мэрии.</p>
-                    </div>
-                    
-                    <!-- ЗАМЕНИТЕ ССЫЛКУ НИЖЕ НА ВАШУ GOOGLE FORM -->
-                    <div class="bg-slate-50 rounded-3xl p-4 border-2 border-dashed border-slate-200">
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfD_L_YourFormID/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" class="rounded-2xl">Загрузка…</iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ВКЛАДКА: ГРАЖДАНЕ -->
-        <div id="citizens" class="tab-content space-y-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Реестр жителей</h2>
-                    <p class="text-slate-500 mt-2">Список официально зарегистрированных лиц в штате.</p>
-                </div>
-                <div class="bg-white px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                    Всего записей: <span class="text-[#002868]">4</span>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-[2rem] shadow-xl border border-slate-200 overflow-hidden">
-                <table class="w-full text-left">
-                    <thead class="bg-slate-50 border-b border-slate-100">
-                        <tr>
-                            <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">CID (Номер)</th>
-                            <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Имя Фамилия</th>
-                            <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Должность / Род деятельности</th>
-                            <th class="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Статус</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-8 py-6 font-mono text-[#002868] font-bold text-sm">#1001</td>
-                            <td class="px-8 py-6 font-bold text-slate-900">John Doe</td>
-                            <td class="px-8 py-6 text-slate-600 text-sm">Губернатор штата</td>
-                            <td class="px-8 py-6"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Действующий</span></td>
-                        </tr>
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-8 py-6 font-mono text-[#002868] font-bold text-sm">#1002</td>
-                            <td class="px-8 py-6 font-bold text-slate-900">Sarah Miller</td>
-                            <td class="px-8 py-6 text-slate-600 text-sm">Верховный судья</td>
-                            <td class="px-8 py-6"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Действующий</span></td>
-                        </tr>
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-8 py-6 font-mono text-[#002868] font-bold text-sm">#1045</td>
-                            <td class="px-8 py-6 font-bold text-slate-900">Michael Ross</td>
-                            <td class="px-8 py-6 text-slate-600 text-sm">Владелец LS Customs</td>
-                            <td class="px-8 py-6"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Действующий</span></td>
-                        </tr>
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-8 py-6 font-mono text-[#002868] font-bold text-sm">#1089</td>
-                            <td class="px-8 py-6 font-bold text-slate-900">James Wilson</td>
-                            <td class="px-8 py-6 text-slate-600 text-sm">Частный детектив</td>
-                            <td class="px-8 py-6"><span class="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Неактивен</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ВКЛАДКА: БИЗНЕСЫ -->
-        <div id="business" class="tab-content space-y-8">
-            <div class="border-b border-slate-200 pb-6">
-                <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Коммерческий реестр</h2>
-                <p class="text-slate-500 mt-2">Предприятия, находящиеся под управлением наших граждан.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Карточка бизнеса -->
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center group-hover:bg-[#f1c40f] transition-colors">
-                            <i data-lucide="wrench" class="text-white group-hover:text-[#002868] transition-colors w-5 h-5"></i>
-                        </div>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Лицензия: OK</span>
-                    </div>
-                    <h3 class="text-xl font-black text-slate-900 mb-1 uppercase tracking-tight">Los Santos Customs</h3>
-                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-6">Автосервис / Тюнинг</p>
-                    <div class="space-y-3 pt-6 border-t border-slate-50">
-                        <div class="flex justify-between text-sm"><span class="text-slate-400">Владелец:</span><span class="font-bold">Michael Ross</span></div>
-                        <div class="flex justify-between text-sm"><span class="text-slate-400">Налоги:</span><span class="text-emerald-500 font-bold">Оплачено</span></div>
-                    </div>
-                </div>
-
-                <!-- Карточка бизнеса -->
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center group-hover:bg-[#f1c40f] transition-colors">
-                            <i data-lucide="coffee" class="text-white group-hover:text-[#002868] transition-colors w-5 h-5"></i>
-                        </div>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Лицензия: OK</span>
-                    </div>
-                    <h3 class="text-xl font-black text-slate-900 mb-1 uppercase tracking-tight">Bean Machine</h3>
-                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-6">Кофейня / Общепит</p>
-                    <div class="space-y-3 pt-6 border-t border-slate-50">
-                        <div class="flex justify-between text-sm"><span class="text-slate-400">Владелец:</span><span class="font-bold">Sarah Miller</span></div>
-                        <div class="flex justify-between text-sm"><span class="text-slate-400">Налоги:</span><span class="text-emerald-500 font-bold">Оплачено</span></div>
-                    </div>
-                </div>
-
-                <!-- Карточка бизнеса -->
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-xl transition-all group opacity-75">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center group-hover:bg-[#f1c40f] transition-colors">
-                            <i data-lucide="shopping-cart" class="text-white group-hover:text-[#002868] transition-colors w-5 h-5"></i>
-                        </div>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-2 py-1 rounded">Проверка</span>
-                    </div>
-                    <h3 class="text-xl font-black text-slate-900 mb-1 uppercase tracking-tight">24/7 Market</h3>
-                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-6">Розничная торговля</p>
-                    <div class="space-y-3 pt-6 border-t border-slate-50">
-                        <div class="flex justify-between text-sm"><span class="text-slate-400">Владелец:</span><span class="font-bold">James Wilson</span></div>
-                        <div class="flex justify-between text-sm"><span class="text-slate-400">Налоги:</span><span class="text-amber-500 font-bold">Задолженность</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 
-    <footer class="bg-slate-900 text-white py-16 mt-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="flex items-center gap-3 mb-6 text-[#f1c40f]">
-                        <i data-lucide="shield" class="w-10 h-10"></i>
-                        <span class="font-black text-2xl uppercase tracking-tighter text-white">State RP Project</span>
-                    </div>
-                    <p class="text-slate-500 text-sm max-w-sm leading-relaxed">Официальный цифровой шлюз Правительства San Andreas. Мы работаем для обеспечения прозрачности и порядка в штате.</p>
-                </div>
-                <div class="flex flex-col md:items-end gap-4">
-                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Экстренные службы</span>
-                    <div class="flex gap-4">
-                        <div class="text-center px-4 py-2 bg-red-900/20 border border-red-900/30 rounded-xl">
-                            <span class="block text-red-500 font-black text-xl">911</span>
-                            <span class="text-[8px] uppercase text-red-500/60 font-bold">Полиция</span>
-                        </div>
-                        <div class="text-center px-4 py-2 bg-blue-900/20 border border-blue-900/30 rounded-xl">
-                            <span class="block text-blue-500 font-black text-xl">912</span>
-                            <span class="text-[8px] uppercase text-blue-500/60 font-bold">Медики</span>
-                        </div>
-                    </div>
-                </div>
+    <footer class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6 text-[#f1c40f]">
+                <i data-lucide="shield" class="w-10 h-10"></i>
+                <span class="font-black text-2xl uppercase tracking-tighter text-white">State RP Project</span>
             </div>
-            <div class="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4 items-center">
-                <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="text-slate-600 hover:text-white transition-colors text-[10px] uppercase font-bold tracking-widest">Конфиденциальность</a>
-                    <a href="#" class="text-slate-600 hover:text-white transition-colors text-[10px] uppercase font-bold tracking-widest">Условия использования</a>
-                </div>
-            </div>
+            <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        // Инициализация иконок Lucide
-        lucide.createIcons();
-
-        // Функция переключения вкладок
-        function showTab(tabId, element) {
-            // Скрываем все вкладки
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            // Показываем нужную вкладку
-            document.getElementById(tabId).classList.add('active');
-
-            // Обновляем активную ссылку в меню
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            element.classList.add('active');
-            
-            // Прокрутка страницы вверх при смене вкладки
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
