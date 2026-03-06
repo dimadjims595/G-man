@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; touch-action: none; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; touch-action: manipulation; }
         
         .map-viewport { 
             cursor: grab; 
@@ -23,10 +23,8 @@
             position: absolute;
             user-select: none;
             -webkit-user-drag: none;
-            transform-origin: 0 0;
-            will-change: transform;
-            /* Убираем transition для мгновенного отклика при pinch-zoom */
-            transition: transform 0.05s linear;
+            transition: transform 0.1s ease-out;
+            transform-origin: center; /* Центрирование для стабильного зума */
         }
 
         .control-btn {
@@ -38,6 +36,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
 
+    <!-- Навигация -->
     <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
@@ -56,22 +55,24 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full space-y-4">
-        <div class="flex flex-col md:flex-row justify-between items-end gap-2">
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-4">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-4">
             <div>
-                <h2 class="text-2xl font-black text-[#002868] uppercase tracking-tighter">Карта боевых действий</h2>
-                <p class="text-slate-500 text-[10px]">Масштабируйте двумя пальцами или кнопками</p>
+                <h2 class="text-3xl font-black text-[#002868] uppercase tracking-tighter">Карта боевых действий</h2>
+                <p class="text-slate-500 text-xs">Оперативная обстановка San Andreas</p>
             </div>
-            <div class="flex items-center gap-2 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
-                <button id="prevBtn" class="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                <div id="currentDate" class="text-[9px] font-black text-[#002868] uppercase tracking-widest min-w-[100px] text-center">Загрузка...</div>
-                <button id="nextBtn" class="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+            <div class="flex items-center gap-2 bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm">
+                <button id="prevBtn" class="p-2 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                <div id="currentDate" class="text-[10px] font-black text-[#002868] uppercase tracking-widest min-w-[100px] text-center">Загрузка...</div>
+                <button id="nextBtn" class="p-2 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
             </div>
         </div>
 
-        <div class="relative rounded-[2rem] shadow-2xl border-4 border-[#002868] h-[550px] md:h-[700px] map-viewport" id="mapViewport">
-            <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта">
+        <div class="relative rounded-[2rem] shadow-2xl border-4 border-[#002868] h-[600px] md:h-[750px] map-viewport" id="mapViewport">
+            <!-- Карта центрирована по умолчанию -->
+            <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта" class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             
+            <!-- Кнопки перемещения -->
             <div class="absolute bottom-6 left-6 flex flex-col items-center gap-2 z-30">
                 <button id="moveUp" class="control-btn"><i data-lucide="chevron-up"></i></button>
                 <div class="flex gap-2">
@@ -81,6 +82,7 @@
                 </div>
             </div>
 
+            <!-- Управление зумом -->
             <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-30">
                 <button id="zoomIn" class="control-btn"><i data-lucide="plus"></i></button>
                 <button id="zoomOut" class="control-btn"><i data-lucide="minus"></i></button>
@@ -99,34 +101,19 @@
         ];
 
         let currentIndex = maps.length - 1;
-        let scale = 2; // Начальный зум 2x
-        let translateX = 0;
-        let translateY = 0;
-        
+        let scale = 1;
         let isDragging = false;
-        let startX, startY;
-        let initialPinchDist = 0;
-        let initialScale = 1;
+        let startX, startY, translateX = 0, translateY = 0;
 
         const viewport = document.getElementById('mapViewport');
         const mapImg = document.getElementById('mapImage');
         const dateEl = document.getElementById('currentDate');
 
         function updateTransform() {
-            // Ограничение зума от 0.1 до 10
+            // Ограничение зума до 10x
             scale = Math.min(Math.max(0.1, scale), 10);
-            mapImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        }
-
-        // Функция для установки вида на левый нижний угол
-        function setInitialView() {
-            const vh = viewport.clientHeight;
-            const imgSize = 2000; // Базовый размер картинки
-            
-            scale = 2; // Увеличиваем в 2 раза
-            translateX = 0; // Левый край
-            translateY = vh - (imgSize * scale); // Нижний край
-            updateTransform();
+            // Используем translate3d для лучшей производительности
+            mapImg.style.transform = `translate3d(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px), 0) scale(${scale})`;
         }
 
         function loadMap() {
@@ -134,44 +121,28 @@
             dateEl.textContent = maps[currentIndex].date;
         }
 
-        // Расчет расстояния между двумя точками (для pinch-zoom)
-        function getDist(touches) {
-            return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
-        }
-
-        // --- TOUCH EVENTS ---
+        // --- ТАЧСКРИН (ТЕЛЕФОНЫ) ---
         viewport.addEventListener('touchstart', (e) => {
             if (e.target.closest('button')) return;
-            
-            if (e.touches.length === 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
-            } else if (e.touches.length === 2) {
-                isDragging = false;
-                initialPinchDist = getDist(e.touches);
-                initialScale = scale;
-            }
+            isDragging = true;
+            const touch = e.touches[0];
+            startX = touch.clientX - translateX;
+            startY = touch.clientY - translateY;
             if(e.cancelable) e.preventDefault();
         }, { passive: false });
 
         window.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 1 && isDragging) {
-                translateX = e.touches[0].clientX - startX;
-                translateY = e.touches[0].clientY - startY;
-                updateTransform();
-            } else if (e.touches.length === 2) {
-                const currentDist = getDist(e.touches);
-                const ratio = currentDist / initialPinchDist;
-                scale = initialScale * ratio;
-                updateTransform();
-            }
+            if (!isDragging) return;
+            const touch = e.touches[0];
+            translateX = touch.clientX - startX;
+            translateY = touch.clientY - startY;
+            updateTransform();
             if(e.cancelable) e.preventDefault();
         }, { passive: false });
 
         window.addEventListener('touchend', () => { isDragging = false; });
 
-        // --- MOUSE EVENTS ---
+        // --- МЫШКА ---
         viewport.addEventListener('mousedown', (e) => {
             if (e.target.closest('button')) return;
             isDragging = true;
@@ -187,23 +158,21 @@
         window.addEventListener('mouseup', () => { isDragging = false; });
 
         // --- КНОПКИ ---
-        const moveStep = 200;
+        const moveStep = 150;
         document.getElementById('moveUp').onclick = (e) => { e.stopPropagation(); translateY += moveStep; updateTransform(); };
         document.getElementById('moveDown').onclick = (e) => { e.stopPropagation(); translateY -= moveStep; updateTransform(); };
         document.getElementById('moveLeft').onclick = (e) => { e.stopPropagation(); translateX += moveStep; updateTransform(); };
         document.getElementById('moveRight').onclick = (e) => { e.stopPropagation(); translateX -= moveStep; updateTransform(); };
 
         document.getElementById('zoomIn').onclick = (e) => { e.stopPropagation(); scale += 0.5; updateTransform(); };
-        document.getElementById('zoomOut').onclick = (e) => { e.stopPropagation(); scale -= 0.5; updateTransform(); };
-        document.getElementById('resetView').onclick = (e) => { e.stopPropagation(); setInitialView(); };
+        document.getElementById('zoomOut').onclick = (e) => { e.stopPropagation(); scale = Math.max(0.1, scale - 0.5); updateTransform(); };
+        document.getElementById('resetView').onclick = (e) => { e.stopPropagation(); scale = 1; translateX = 0; translateY = 0; updateTransform(); };
 
         document.getElementById('prevBtn').onclick = () => { if (currentIndex > 0) { currentIndex--; loadMap(); } };
         document.getElementById('nextBtn').onclick = () => { if (currentIndex < maps.length - 1) { currentIndex++; loadMap(); } };
 
-        // Инициализация
         loadMap();
-        // Ждем загрузки картинки, чтобы правильно рассчитать размеры для начального вида
-        mapImg.onload = setInitialView;
+        updateTransform();
     </script>
 </body>
 </html>
