@@ -76,17 +76,20 @@
     <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <i data-lucide="shield" class="text-[#f1c40f]"></i>
-                <span class="font-black text-xl uppercase tracking-tighter">State Portal</span>
+                <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
+                <div class="flex flex-col">
+                    <span class="font-black text-xl uppercase tracking-tighter leading-none">State Portal</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-[#f1c40f] font-bold">San Andreas Gov</span>
+                </div>
             </div>
             <div class="hidden lg:flex items-center space-x-2">
-                <a href="index.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Главная</a>
-                <a href="news.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Новости</a>
-                <a href="registration.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Регистрация</a>
-                <a href="citizens.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Граждане</a>
-                <a href="business.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Бизнесы</a>
-                <a href="map.html" class="bg-white/10 text-[#f1c40f] px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Карта</a>
-                <a href="donate.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Пожертвования</a>
+                <a href="index.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Главная</a>
+                <a href="news.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Новости</a>
+                <a href="registration.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Регистрация</a>
+                <a href="citizens.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Граждане</a>
+                <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Бизнесы</a>
+                <a href="map.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Карта</a>
+                <a href="donate.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Пожертвования</a>
             </div>
         </div>
     </nav>
@@ -181,6 +184,7 @@
         const mapImg = document.getElementById('mapImage');
         const dateEl = document.getElementById('currentDate');
         
+        // Элементы отладки
         const debugX = document.getElementById('debugX');
         const debugY = document.getElementById('debugY');
         const debugScale = document.getElementById('debugScale');
@@ -189,6 +193,7 @@
             scale = Math.min(Math.max(0.1, scale), 10);
             mapImg.style.transform = `translate3d(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px), 0) scale(${scale})`;
             
+            // Обновление панели координат
             debugX.textContent = Math.round(translateX);
             debugY.textContent = Math.round(translateY);
             debugScale.textContent = scale.toFixed(2);
