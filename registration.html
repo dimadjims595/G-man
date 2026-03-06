@@ -12,7 +12,28 @@
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
     <!-- Навигация -->
+    <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
+                <div class="flex flex-col">
+                    <span class="font-black text-xl uppercase tracking-tighter leading-none">State Portal</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-[#f1c40f] font-bold">San Andreas Gov</span>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center space-x-2">
+                <a href="index.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Главная</a>
+                <a href="news.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Новости</a>
+                <a href="registration.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Регистрация</a>
+                <a href="citizens.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Граждане</a>
+                <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Бизнесы</a>
+                <a href="map.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all text-[#f1c40f]">Карта</a>
+                <a href="donate.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Пожертвования</a>
+            </div>
+        </div>
+    </nav>
 
     <main class="max-w-5xl mx-auto px-4 py-12 w-full space-y-12">
         <div class="text-center space-y-4">
@@ -25,6 +46,7 @@
             <!-- Декоративная рамка -->
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-[#f1c40f]/20 rounded-[3rem] pointer-events-none transition-colors duration-500"></div>
             
+            <!-- Заглушка для Google Form -->
             <iframe 
                 src="https://docs.google.com/forms/d/e/ВАШ_ID_ФОРМЫ/viewform?embedded=true" 
                 width="100%" 
@@ -36,6 +58,7 @@
                 Загрузка…
             </iframe>
             
+            <!-- Инструкция если форма не грузится -->
             <div class="absolute inset-0 flex items-center justify-center bg-slate-50">
                 <div class="text-center p-12">
                     <div class="w-20 h-20 bg-white rounded-3xl shadow-lg flex items-center justify-center mx-auto mb-8 animate-pulse">
@@ -45,7 +68,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-blue-50 p-8 rounded-[2rem] border border-blue-100">
+                <h4 class="text-[#002868] font-black uppercase tracking-widest text-[10px] mb-4">Шаг 1</h4>
+                <p class="text-slate-600 text-xs leading-relaxed">Заполните все обязательные поля анкеты, указав достоверные данные.</p>
+            </div>
+            <div class="bg-amber-50 p-8 rounded-[2rem] border border-amber-100">
+                <h4 class="text-[#002868] font-black uppercase tracking-widest text-[10px] mb-4">Шаг 2</h4>
+                <p class="text-slate-600 text-xs leading-relaxed">Дождитесь проверки заявления сотрудниками департамента юстиции.</p>
+            </div>
+            <div class="bg-emerald-50 p-8 rounded-[2rem] border border-emerald-100">
+                <h4 class="text-[#002868] font-black uppercase tracking-widest text-[10px] mb-4">Шаг 3</h4>
+                <p class="text-slate-600 text-xs leading-relaxed">Получите уведомление о готовности вашей ID-карты в личном кабинете.</p>
+            </div>
+        </div>
     </main>
-    <script>lucide.createIcons();</script>
+
+    <footer class="bg-slate-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
