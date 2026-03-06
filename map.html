@@ -8,9 +8,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; touch-action: manipulation; }
+        body { font-family: 'Inter', sans-serif; touch-action: none; overflow: hidden; }
         
-        /* Стили окна карты */
         .map-viewport { 
             cursor: grab; 
             overflow: hidden; 
@@ -24,23 +23,21 @@
             position: absolute;
             user-select: none;
             -webkit-user-drag: none;
-            transition: transform 0.1s ease-out;
             transform-origin: 0 0;
             will-change: transform;
+            /* Убираем transition для мгновенного отклика при pinch-zoom */
+            transition: transform 0.05s linear;
         }
 
-        /* Тактические кнопки управления */
         .control-btn {
             @apply w-12 h-12 bg-[#002868] border-2 border-[#f1c40f] rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.5)] 
                    flex items-center justify-center text-[#f1c40f] active:scale-90 transition-all z-30;
         }
-        .control-btn:hover { @apply bg-[#003a96] brightness-110; }
         .control-btn i { @apply w-6 h-6; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
 
-    <!-- Навигация -->
     <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
@@ -59,24 +56,22 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-4">
-        <div class="flex flex-col md:flex-row justify-between items-end gap-4">
+    <main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full space-y-4">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-2">
             <div>
-                <h2 class="text-3xl font-black text-[#002868] uppercase tracking-tighter">Карта боевых действий</h2>
-                <p class="text-slate-500 text-xs">Оперативная обстановка San Andreas</p>
+                <h2 class="text-2xl font-black text-[#002868] uppercase tracking-tighter">Карта боевых действий</h2>
+                <p class="text-slate-500 text-[10px]">Масштабируйте двумя пальцами или кнопками</p>
             </div>
-            <div class="flex items-center gap-2 bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm">
-                <button id="prevBtn" class="p-2 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                <div id="currentDate" class="text-[10px] font-black text-[#002868] uppercase tracking-widest min-w-[100px] text-center">Загрузка...</div>
-                <button id="nextBtn" class="p-2 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+            <div class="flex items-center gap-2 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                <button id="prevBtn" class="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                <div id="currentDate" class="text-[9px] font-black text-[#002868] uppercase tracking-widest min-w-[100px] text-center">Загрузка...</div>
+                <button id="nextBtn" class="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
             </div>
         </div>
 
-        <!-- Окно карты -->
-        <div class="relative rounded-[2rem] shadow-2xl border-4 border-[#002868] h-[600px] md:h-[750px] map-viewport" id="mapViewport">
-            <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта" style="left: 0; top: 0;">
+        <div class="relative rounded-[2rem] shadow-2xl border-4 border-[#002868] h-[550px] md:h-[700px] map-viewport" id="mapViewport">
+            <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта">
             
-            <!-- Кнопки перемещения (D-Pad) -->
             <div class="absolute bottom-6 left-6 flex flex-col items-center gap-2 z-30">
                 <button id="moveUp" class="control-btn"><i data-lucide="chevron-up"></i></button>
                 <div class="flex gap-2">
@@ -86,20 +81,10 @@
                 </div>
             </div>
 
-            <!-- Управление зумом -->
             <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-30">
                 <button id="zoomIn" class="control-btn"><i data-lucide="plus"></i></button>
                 <button id="zoomOut" class="control-btn"><i data-lucide="minus"></i></button>
                 <button id="resetView" class="control-btn"><i data-lucide="maximize"></i></button>
-            </div>
-
-            <!-- Легенда -->
-            <div class="hidden md:block absolute top-6 left-6 bg-[#002868]/90 backdrop-blur-md p-4 rounded-2xl border border-[#f1c40f]/30 text-white space-y-2 shadow-2xl z-20 pointer-events-none">
-                <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-[#f1c40f]">Легенда</h4>
-                <div class="space-y-1.5">
-                    <div class="flex items-center gap-2 text-[10px] font-medium"><div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_5px_blue]"></div><span>Силы правопорядка</span></div>
-                    <div class="flex items-center gap-2 text-[10px] font-medium"><div class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_5px_red]"></div><span>Зоны конфликта</span></div>
-                </div>
             </div>
         </div>
     </main>
@@ -114,16 +99,34 @@
         ];
 
         let currentIndex = maps.length - 1;
-        let scale = 1;
+        let scale = 2; // Начальный зум 2x
+        let translateX = 0;
+        let translateY = 0;
+        
         let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
+        let startX, startY;
+        let initialPinchDist = 0;
+        let initialScale = 1;
 
         const viewport = document.getElementById('mapViewport');
         const mapImg = document.getElementById('mapImage');
         const dateEl = document.getElementById('currentDate');
 
         function updateTransform() {
+            // Ограничение зума от 0.1 до 10
+            scale = Math.min(Math.max(0.1, scale), 10);
             mapImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+
+        // Функция для установки вида на левый нижний угол
+        function setInitialView() {
+            const vh = viewport.clientHeight;
+            const imgSize = 2000; // Базовый размер картинки
+            
+            scale = 2; // Увеличиваем в 2 раза
+            translateX = 0; // Левый край
+            translateY = vh - (imgSize * scale); // Нижний край
+            updateTransform();
         }
 
         function loadMap() {
@@ -131,30 +134,44 @@
             dateEl.textContent = maps[currentIndex].date;
         }
 
-        // --- ОБРАБОТКА КАСАНИЙ (TOUCH) ---
+        // Расчет расстояния между двумя точками (для pinch-zoom)
+        function getDist(touches) {
+            return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+        }
+
+        // --- TOUCH EVENTS ---
         viewport.addEventListener('touchstart', (e) => {
-            // Если нажали на кнопку - не запускаем перетаскивание карты
             if (e.target.closest('button')) return;
             
-            isDragging = true;
-            const touch = e.touches[0];
-            startX = touch.clientX - translateX;
-            startY = touch.clientY - translateY;
+            if (e.touches.length === 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                initialPinchDist = getDist(e.touches);
+                initialScale = scale;
+            }
             if(e.cancelable) e.preventDefault();
         }, { passive: false });
 
         window.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const touch = e.touches[0];
-            translateX = touch.clientX - startX;
-            translateY = touch.clientY - startY;
-            updateTransform();
+            if (e.touches.length === 1 && isDragging) {
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                updateTransform();
+            } else if (e.touches.length === 2) {
+                const currentDist = getDist(e.touches);
+                const ratio = currentDist / initialPinchDist;
+                scale = initialScale * ratio;
+                updateTransform();
+            }
             if(e.cancelable) e.preventDefault();
         }, { passive: false });
 
         window.addEventListener('touchend', () => { isDragging = false; });
 
-        // --- МЫШКА ---
+        // --- MOUSE EVENTS ---
         viewport.addEventListener('mousedown', (e) => {
             if (e.target.closest('button')) return;
             isDragging = true;
@@ -169,38 +186,24 @@
         });
         window.addEventListener('mouseup', () => { isDragging = false; });
 
-        // --- КНОПКИ УПРАВЛЕНИЯ ---
-        const moveStep = 150;
-        
-        // Навигация
+        // --- КНОПКИ ---
+        const moveStep = 200;
         document.getElementById('moveUp').onclick = (e) => { e.stopPropagation(); translateY += moveStep; updateTransform(); };
         document.getElementById('moveDown').onclick = (e) => { e.stopPropagation(); translateY -= moveStep; updateTransform(); };
         document.getElementById('moveLeft').onclick = (e) => { e.stopPropagation(); translateX += moveStep; updateTransform(); };
         document.getElementById('moveRight').onclick = (e) => { e.stopPropagation(); translateX -= moveStep; updateTransform(); };
 
-        // Зум (Масштаб)
-        document.getElementById('zoomIn').onclick = (e) => { 
-            e.stopPropagation();
-            scale = Math.min(5, scale + 0.3); 
-            updateTransform(); 
-        };
-        document.getElementById('zoomOut').onclick = (e) => { 
-            e.stopPropagation();
-            scale = Math.max(0.1, scale - 0.3); 
-            updateTransform(); 
-        };
-        document.getElementById('resetView').onclick = (e) => { 
-            e.stopPropagation();
-            scale = 1; translateX = 0; translateY = 0; 
-            updateTransform(); 
-        };
+        document.getElementById('zoomIn').onclick = (e) => { e.stopPropagation(); scale += 0.5; updateTransform(); };
+        document.getElementById('zoomOut').onclick = (e) => { e.stopPropagation(); scale -= 0.5; updateTransform(); };
+        document.getElementById('resetView').onclick = (e) => { e.stopPropagation(); setInitialView(); };
 
-        // Даты
         document.getElementById('prevBtn').onclick = () => { if (currentIndex > 0) { currentIndex--; loadMap(); } };
         document.getElementById('nextBtn').onclick = () => { if (currentIndex < maps.length - 1) { currentIndex++; loadMap(); } };
 
+        // Инициализация
         loadMap();
-        updateTransform();
+        // Ждем загрузки картинки, чтобы правильно рассчитать размеры для начального вида
+        mapImg.onload = setInitialView;
     </script>
 </body>
 </html>
