@@ -52,9 +52,13 @@
             <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed mb-16">
                 Официальный информационный ресурс правительства штата San Andreas. Мы работаем для вашего благополучия и безопасности.
             </p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="registration.html" class="bg-[#f1c40f] text-[#002868] px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_20px_50px_rgba(241,196,15,0.3)]">Получить ID-карту</a>
-                <a href="news.html" class="bg-white/10 backdrop-blur-md border border-white/20 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition-all">Последние новости</a>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <a href="registration.html" class="bg-[#f1c40f] text-[#002868] px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_20px_50px_rgba(241,196,15,0.3)] text-sm md:text-base">Получить ID-карту</a>
+                <a href="news.html" class="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition-all text-sm md:text-base">Новости</a>
+                <a href="map.html" class="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition-all text-sm md:text-base">Карта</a>
+                <a href="citizens.html" class="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition-all text-sm md:text-base">Граждане</a>
+                <a href="business.html" class="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition-all text-sm md:text-base text-[#f1c40f]">Бизнесы</a>
+                <a href="donate.html" class="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition-all text-sm md:text-base">Поддержать</a>
             </div>
         </div>
         
@@ -65,7 +69,7 @@
     <!-- Основные разделы (Карточки) -->
     <main class="max-w-7xl mx-auto px-4 py-24 w-full">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Карточки (Новости, Регистрация и т.д.) -->
+            <!-- Новости -->
             <a href="news.html" class="group bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all hover:-translate-y-2">
                 <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#002868] transition-colors">
                     <i data-lucide="newspaper" class="text-[#002868] group-hover:text-white transition-colors"></i>
@@ -73,14 +77,93 @@
                 <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-2">Новости штата</h3>
                 <p class="text-slate-500 text-sm leading-relaxed">Будьте в курсе последних событий, указов губернатора и важных изменений в законодательстве.</p>
             </a>
-            <!-- ... остальные карточки ... -->
+
+            <!-- Регистрация -->
+            <a href="registration.html" class="group bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all hover:-translate-y-2">
+                <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#f1c40f] transition-colors">
+                    <i data-lucide="user-plus" class="text-[#f1c40f] group-hover:text-[#002868] transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-2">Регистрация ID</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Подайте заявление на получение официального удостоверения личности гражданина штата.</p>
+            </a>
+
+            <!-- Список граждан -->
+            <a href="citizens.html" class="group bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all hover:-translate-y-2">
+                <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors">
+                    <i data-lucide="users" class="text-emerald-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-2">Реестр граждан</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Просмотрите список официально зарегистрированных жителей и их текущий статус.</p>
+            </a>
+
+            <!-- Бизнесы -->
+            <a href="business.html" class="group bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all hover:-translate-y-2">
+                <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                    <i data-lucide="briefcase" class="text-purple-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-2">Реестр бизнесов</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Информация о зарегистрированных предприятиях, их владельцах и налоговом статусе.</p>
+            </a>
+
+            <!-- Карта -->
+            <a href="map.html" class="group bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all hover:-translate-y-2">
+                <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                    <i data-lucide="map" class="text-red-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-2">Карта действий</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Оперативная карта штата с обозначением зон контроля и важных стратегических объектов.</p>
+            </a>
+
+            <!-- Пожертвования -->
+            <a href="donate.html" class="group bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all hover:-translate-y-2">
+                <div class="w-16 h-16 bg-yellow-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-yellow-500 transition-colors">
+                    <i data-lucide="heart" class="text-yellow-500 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-2">Поддержка штата</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Ваши пожертвования помогают развивать инфраструктуру и поддерживать порядок в штате.</p>
+            </a>
         </div>
     </main>
 
+    <!-- Футер -->
     <footer class="bg-slate-900 text-white py-24">
-        <!-- Футер -->
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
+                        <span class="font-black text-xl uppercase tracking-tighter">State Portal</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Официальный ресурс правительства штата San Andreas. Мы стремимся к прозрачности и эффективности в управлении.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-[#f1c40f] font-black uppercase tracking-widest text-xs mb-6">Навигация</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li><a href="news.html" class="hover:text-white transition-colors">Новости</a></li>
+                        <li><a href="registration.html" class="hover:text-white transition-colors">Регистрация</a></li>
+                        <li><a href="citizens.html" class="hover:text-white transition-colors">Реестр граждан</a></li>
+                        <li><a href="map.html" class="hover:text-white transition-colors">Карта</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#f1c40f] font-black uppercase tracking-widest text-xs mb-6">Контакты</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Здание Мэрии, Лос-Сантос<br>
+                        Штат San Andreas<br>
+                        Горячая линия: 911
+                    </p>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-white/5 text-center">
+                <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
