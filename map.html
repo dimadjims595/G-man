@@ -27,18 +27,47 @@
             transform-origin: center;
         }
 
-        /* Улучшенные кнопки управления */
+        /* Улучшенные кнопки управления с эффектом стекла */
         .control-btn {
-            @apply w-14 h-14 bg-[#002868]/60 backdrop-blur-md border-2 border-[#f1c40f]/50 rounded-2xl shadow-2xl 
-                   flex items-center justify-center text-[#f1c40f] active:scale-90 transition-all z-30;
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: rgba(0, 40, 104, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f1c40f;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 30;
+            cursor: pointer;
         }
-        .control-btn:hover { @apply bg-[#002868]/80 border-[#f1c40f] scale-105; }
+        .control-btn:active { transform: scale(0.95); }
+        .control-btn:hover { 
+            background-color: rgba(0, 40, 104, 0.7); 
+            border-color: #f1c40f; 
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
+        }
         
         /* Кружок вокруг иконки */
         .icon-circle {
-            @apply w-10 h-10 rounded-full border border-[#f1c40f]/30 flex items-center justify-center bg-black/20;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(241, 196, 15, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
         }
-        .control-btn:hover .icon-circle { @apply border-[#f1c40f] bg-black/40; }
+        .control-btn:hover .icon-circle { 
+            border-color: rgba(241, 196, 15, 0.5); 
+            background-color: rgba(0, 0, 0, 0.4); 
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
@@ -96,11 +125,11 @@
             </div>
         </div>
 
-        <!-- ПАНЕЛЬ ОТЛАДКИ -->
+        <!-- ПАНЕЛЬ КООРДИНАТ -->
         <div class="bg-slate-900 text-white p-4 rounded-2xl border border-white/10 shadow-xl mt-8">
             <div class="flex items-center gap-2 mb-2">
-                <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Debug: Map Coordinates</span>
+                <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Map Coordinates</span>
             </div>
             <div class="grid grid-cols-3 gap-4 font-mono text-xs">
                 <div class="bg-black/30 p-2 rounded-lg border border-white/5">
@@ -116,7 +145,7 @@
                     <span id="debugScale" class="text-[#f1c40f]">1.0</span>
                 </div>
             </div>
-            <p class="text-[9px] text-slate-500 mt-3 italic">Переместите карту в нужное положение и скопируйте эти значения для настройки стартового вида.</p>
+            <p class="text-[9px] text-slate-500 mt-3 italic">Текущее положение карты для настройки системы.</p>
         </div>
     </main>
 
@@ -131,21 +160,27 @@
         lucide.createIcons();
 
         const maps = [
-            { date: "1 марта 2024", image: "https://picsum.photos/seed/map1/2000/2000" },
-            { date: "2 марта 2024", image: "https://picsum.photos/seed/map2/2000/2000" },
-            { date: "3 марта 2024", image: "map3.png" }
+            { date: "1 марта 2026", image: "https://picsum.photos/seed/map1/2000/2000" },
+            { date: "2 марта 2026", image: "https://picsum.photos/seed/map2/2000/2000" },
+            { date: "3 марта 2026", image: "https://picsum.photos/seed/map3/2000/2000" },
+            { date: "4 марта 2026", image: "https://picsum.photos/seed/map4/2000/2000" },
+            { date: "5 марта 2026", image: "https://picsum.photos/seed/map5/2000/2000" },
+            { date: "6 марта 2026", image: "map3.png" }
         ];
 
+        // УСТАНОВЛЕННЫЕ ПОЛЬЗОВАТЕЛЕМ КООРДИНАТЫ
         let currentIndex = maps.length - 1;
-        let scale = 1;
+        let scale = 8.00;
+        let translateX = 963;
+        let translateY = -969;
+        
         let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
+        let startX, startY;
 
         const viewport = document.getElementById('mapViewport');
         const mapImg = document.getElementById('mapImage');
         const dateEl = document.getElementById('currentDate');
         
-        // Элементы отладки
         const debugX = document.getElementById('debugX');
         const debugY = document.getElementById('debugY');
         const debugScale = document.getElementById('debugScale');
@@ -154,7 +189,6 @@
             scale = Math.min(Math.max(0.1, scale), 10);
             mapImg.style.transform = `translate3d(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px), 0) scale(${scale})`;
             
-            // Обновление панели отладки
             debugX.textContent = Math.round(translateX);
             debugY.textContent = Math.round(translateY);
             debugScale.textContent = scale.toFixed(2);
