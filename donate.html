@@ -7,65 +7,103 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
 
+    <!-- Навигация -->
     <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <i data-lucide="shield" class="text-[#f1c40f]"></i>
-                <span class="font-black text-xl uppercase tracking-tighter">State Portal</span>
+                <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
+                <div class="flex flex-col">
+                    <span class="font-black text-xl uppercase tracking-tighter leading-none">State Portal</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-[#f1c40f] font-bold">San Andreas Gov</span>
+                </div>
             </div>
             <div class="hidden lg:flex items-center space-x-2">
-                <a href="index.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Главная</a>
-                <a href="news.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Новости</a>
-                <a href="registration.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Регистрация</a>
-                <a href="citizens.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Граждане</a>
-                <a href="business.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Бизнесы</a>
-                <a href="map.html" class="hover:bg-white/5 px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Карта</a>
-                <a href="donate.html" class="bg-white/10 text-[#f1c40f] px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Пожертвования</a>
+                <a href="index.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Главная</a>
+                <a href="news.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Новости</a>
+                <a href="registration.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Регистрация</a>
+                <a href="citizens.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Граждане</a>
+                <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Бизнесы</a>
+                <a href="map.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all text-[#f1c40f]">Карта</a>
+                <a href="donate.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all">Пожертвования</a>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto px-4 py-12 flex-grow w-full space-y-12">
+    <main class="max-w-4xl mx-auto px-4 py-12 w-full space-y-12">
         <div class="text-center space-y-4">
-            <h2 class="text-5xl font-black text-[#002868] uppercase tracking-tighter">Фонд развития штата</h2>
-            <p class="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">Ваши пожертвования помогают нам улучшать инфраструктуру, поддерживать экстренные службы и проводить общественные мероприятия.</p>
+            <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Поддержка штата</h2>
+            <p class="text-slate-500 max-w-2xl mx-auto">Ваши добровольные взносы направляются на развитие инфраструктуры, поддержку правопорядка и социальные программы.</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-sm space-y-6">
-                <div class="w-16 h-16 bg-pink-50 rounded-3xl flex items-center justify-center"><i data-lucide="heart" class="text-pink-600 w-8 h-8"></i></div>
-                <h3 class="text-2xl font-bold">Поддержать проект</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Все собранные средства идут на оплату хостинга, разработку новых функций и призовые фонды для игроков.</p>
-                <div class="pt-6">
-                    <button class="w-full bg-[#002868] text-white py-4 rounded-2xl font-bold uppercase tracking-widest hover:bg-[#002868]/90 transition-all flex items-center justify-center gap-3">
-                        Сделать взнос <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </button>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Форма пожертвования -->
+            <div class="bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100">
+                <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-6">Сделать взнос</h3>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Сумма пожертвования ($)</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button class="py-3 bg-slate-50 rounded-xl font-bold text-sm hover:bg-[#002868] hover:text-white transition-all border border-slate-100">1,000</button>
+                            <button class="py-3 bg-slate-50 rounded-xl font-bold text-sm hover:bg-[#002868] hover:text-white transition-all border border-slate-100">5,000</button>
+                            <button class="py-3 bg-slate-50 rounded-xl font-bold text-sm hover:bg-[#002868] hover:text-white transition-all border border-slate-100">10,000</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Ваше имя (необязательно)</label>
+                        <input type="text" placeholder="Анонимно" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002868]">
+                    </div>
+                    <button class="w-full bg-[#f1c40f] text-[#002868] py-4 rounded-xl font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all">Поддержать штат</button>
                 </div>
             </div>
 
-            <div class="bg-slate-900 p-10 rounded-[2.5rem] text-white space-y-6">
-                <div class="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center"><i data-lucide="award" class="text-[#f1c40f] w-8 h-8"></i></div>
-                <h3 class="text-2xl font-bold">Топ меценатов</h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/10">
-                        <div class="flex items-center gap-3"><span class="font-mono text-[#f1c40f]">01</span><span class="font-bold">Michael Ross</span></div>
-                        <span class="font-mono text-xs opacity-60">$50,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/10">
-                        <div class="flex items-center gap-3"><span class="font-mono text-slate-400">02</span><span class="font-bold">Sarah Miller</span></div>
-                        <span class="font-mono text-xs opacity-60">$25,000</span>
+            <!-- Топ меценатов -->
+            <div class="bg-[#002868] text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-black text-[#f1c40f] uppercase tracking-tighter mb-8">Топ меценатов</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-black text-[#f1c40f]">1</div>
+                                <span class="font-bold">Richie Rich</span>
+                            </div>
+                            <span class="font-mono text-[#f1c40f]">$500,000</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-black text-slate-300">2</div>
+                                <span class="font-bold">Bruce Wayne</span>
+                            </div>
+                            <span class="font-mono text-slate-300">$250,000</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-black text-amber-600">3</div>
+                                <span class="font-bold">Tony Stark</span>
+                            </div>
+                            <span class="font-mono text-amber-600">$100,000</span>
+                        </div>
                     </div>
                 </div>
+                <!-- Декоративный элемент -->
+                <i data-lucide="crown" class="absolute -bottom-10 -right-10 w-48 h-48 text-white/5 rotate-12"></i>
             </div>
         </div>
     </main>
 
-    <script>lucide.createIcons();</script>
+    <footer class="bg-slate-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
