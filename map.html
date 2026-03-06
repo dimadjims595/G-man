@@ -9,18 +9,33 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; touch-action: manipulation; }
-        .map-viewport { cursor: grab; overflow: hidden; position: relative; background: #0f172a; touch-action: none; }
+        
+        /* Стили окна карты */
+        .map-viewport { 
+            cursor: grab; 
+            overflow: hidden; 
+            position: relative; 
+            background: #020617; 
+            touch-action: none; 
+        }
         .map-viewport:active { cursor: grabbing; }
+        
         #mapImage { 
             position: absolute;
             user-select: none;
             -webkit-user-drag: none;
             transition: transform 0.1s ease-out;
             transform-origin: 0 0;
+            will-change: transform;
         }
-        .nav-btn-group button {
-            @apply w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg flex items-center justify-center hover:bg-[#f1c40f] active:scale-95 transition-all text-[#002868];
+
+        /* Тактические кнопки управления */
+        .control-btn {
+            @apply w-12 h-12 bg-[#002868] border-2 border-[#f1c40f] rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.5)] 
+                   flex items-center justify-center text-[#f1c40f] active:scale-90 transition-all z-30;
         }
+        .control-btn:hover { @apply bg-[#003a96] brightness-110; }
+        .control-btn i { @apply w-6 h-6; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
@@ -44,46 +59,46 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-4">
         <div class="flex flex-col md:flex-row justify-between items-end gap-4">
             <div>
                 <h2 class="text-3xl font-black text-[#002868] uppercase tracking-tighter">Карта боевых действий</h2>
-                <p class="text-slate-500 text-sm">Оперативная обстановка San Andreas.</p>
+                <p class="text-slate-500 text-xs">Оперативная обстановка San Andreas</p>
             </div>
-            <div class="flex items-center gap-3 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
-                <button id="prevBtn" class="p-2 hover:bg-slate-100 rounded-xl transition-colors"><i data-lucide="chevron-left"></i></button>
-                <div id="currentDate" class="text-xs font-bold text-[#002868] uppercase tracking-widest min-w-[120px] text-center">Загрузка...</div>
-                <button id="nextBtn" class="p-2 hover:bg-slate-100 rounded-xl transition-colors"><i data-lucide="chevron-right"></i></button>
+            <div class="flex items-center gap-2 bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm">
+                <button id="prevBtn" class="p-2 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                <div id="currentDate" class="text-[10px] font-black text-[#002868] uppercase tracking-widest min-w-[100px] text-center">Загрузка...</div>
+                <button id="nextBtn" class="p-2 hover:bg-slate-100 rounded-lg transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
             </div>
         </div>
 
         <!-- Окно карты -->
-        <div class="relative rounded-[2rem] shadow-2xl border-4 border-white h-[600px] md:h-[700px] map-viewport" id="mapViewport">
+        <div class="relative rounded-[2rem] shadow-2xl border-4 border-[#002868] h-[600px] md:h-[750px] map-viewport" id="mapViewport">
             <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта" style="left: 0; top: 0;">
             
             <!-- Кнопки перемещения (D-Pad) -->
-            <div class="absolute bottom-6 left-6 flex flex-col items-center gap-2 z-20 nav-btn-group">
-                <button id="moveUp"><i data-lucide="chevron-up"></i></button>
+            <div class="absolute bottom-6 left-6 flex flex-col items-center gap-2 z-30">
+                <button id="moveUp" class="control-btn"><i data-lucide="chevron-up"></i></button>
                 <div class="flex gap-2">
-                    <button id="moveLeft"><i data-lucide="chevron-left"></i></button>
-                    <button id="moveDown"><i data-lucide="chevron-down"></i></button>
-                    <button id="moveRight"><i data-lucide="chevron-right"></i></button>
+                    <button id="moveLeft" class="control-btn"><i data-lucide="chevron-left"></i></button>
+                    <button id="moveDown" class="control-btn"><i data-lucide="chevron-down"></i></button>
+                    <button id="moveRight" class="control-btn"><i data-lucide="chevron-right"></i></button>
                 </div>
             </div>
 
             <!-- Управление зумом -->
-            <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-20 nav-btn-group">
-                <button id="zoomIn"><i data-lucide="plus"></i></button>
-                <button id="zoomOut"><i data-lucide="minus"></i></button>
-                <button id="resetView"><i data-lucide="maximize"></i></button>
+            <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-30">
+                <button id="zoomIn" class="control-btn"><i data-lucide="plus"></i></button>
+                <button id="zoomOut" class="control-btn"><i data-lucide="minus"></i></button>
+                <button id="resetView" class="control-btn"><i data-lucide="maximize"></i></button>
             </div>
 
-            <!-- Легенда (скрыта на маленьких экранах для экономии места) -->
-            <div class="hidden md:block absolute top-6 left-6 bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-white/10 text-white space-y-3 shadow-2xl z-20 pointer-events-none">
+            <!-- Легенда -->
+            <div class="hidden md:block absolute top-6 left-6 bg-[#002868]/90 backdrop-blur-md p-4 rounded-2xl border border-[#f1c40f]/30 text-white space-y-2 shadow-2xl z-20 pointer-events-none">
                 <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-[#f1c40f]">Легенда</h4>
                 <div class="space-y-1.5">
-                    <div class="flex items-center gap-2 text-[10px] font-medium"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span>Силы правопорядка</span></div>
-                    <div class="flex items-center gap-2 text-[10px] font-medium"><div class="w-2 h-2 rounded-full bg-red-500"></div><span>Зоны конфликта</span></div>
+                    <div class="flex items-center gap-2 text-[10px] font-medium"><div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_5px_blue]"></div><span>Силы правопорядка</span></div>
+                    <div class="flex items-center gap-2 text-[10px] font-medium"><div class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_5px_red]"></div><span>Зоны конфликта</span></div>
                 </div>
             </div>
         </div>
@@ -116,30 +131,17 @@
             dateEl.textContent = maps[currentIndex].date;
         }
 
-        // --- МЫШКА ---
-        viewport.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX - translateX;
-            startY = e.clientY - translateY;
-            viewport.style.cursor = 'grabbing';
-        });
-
-        // --- ТАЧСКРИН (ТЕЛЕФОНЫ) ---
+        // --- ОБРАБОТКА КАСАНИЙ (TOUCH) ---
         viewport.addEventListener('touchstart', (e) => {
+            // Если нажали на кнопку - не запускаем перетаскивание карты
+            if (e.target.closest('button')) return;
+            
             isDragging = true;
             const touch = e.touches[0];
             startX = touch.clientX - translateX;
             startY = touch.clientY - translateY;
-            // Не даем странице скроллиться, когда двигаем карту
             if(e.cancelable) e.preventDefault();
         }, { passive: false });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            translateX = e.clientX - startX;
-            translateY = e.clientY - startY;
-            updateTransform();
-        });
 
         window.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
@@ -150,20 +152,48 @@
             if(e.cancelable) e.preventDefault();
         }, { passive: false });
 
-        window.addEventListener('mouseup', () => { isDragging = false; viewport.style.cursor = 'grab'; });
         window.addEventListener('touchend', () => { isDragging = false; });
 
-        // --- КНОПКИ НАВИГАЦИИ ---
-        const moveStep = 100;
-        document.getElementById('moveUp').onclick = () => { translateY += moveStep; updateTransform(); };
-        document.getElementById('moveDown').onclick = () => { translateY -= moveStep; updateTransform(); };
-        document.getElementById('moveLeft').onclick = () => { translateX += moveStep; updateTransform(); };
-        document.getElementById('moveRight').onclick = () => { translateX -= moveStep; updateTransform(); };
+        // --- МЫШКА ---
+        viewport.addEventListener('mousedown', (e) => {
+            if (e.target.closest('button')) return;
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateTransform();
+        });
+        window.addEventListener('mouseup', () => { isDragging = false; });
 
-        // Зум
-        document.getElementById('zoomIn').onclick = () => { scale += 0.2; updateTransform(); };
-        document.getElementById('zoomOut').onclick = () => { scale = Math.max(0.1, scale - 0.2); updateTransform(); };
-        document.getElementById('resetView').onclick = () => { scale = 1; translateX = 0; translateY = 0; updateTransform(); };
+        // --- КНОПКИ УПРАВЛЕНИЯ ---
+        const moveStep = 150;
+        
+        // Навигация
+        document.getElementById('moveUp').onclick = (e) => { e.stopPropagation(); translateY += moveStep; updateTransform(); };
+        document.getElementById('moveDown').onclick = (e) => { e.stopPropagation(); translateY -= moveStep; updateTransform(); };
+        document.getElementById('moveLeft').onclick = (e) => { e.stopPropagation(); translateX += moveStep; updateTransform(); };
+        document.getElementById('moveRight').onclick = (e) => { e.stopPropagation(); translateX -= moveStep; updateTransform(); };
+
+        // Зум (Масштаб)
+        document.getElementById('zoomIn').onclick = (e) => { 
+            e.stopPropagation();
+            scale = Math.min(5, scale + 0.3); 
+            updateTransform(); 
+        };
+        document.getElementById('zoomOut').onclick = (e) => { 
+            e.stopPropagation();
+            scale = Math.max(0.1, scale - 0.3); 
+            updateTransform(); 
+        };
+        document.getElementById('resetView').onclick = (e) => { 
+            e.stopPropagation();
+            scale = 1; translateX = 0; translateY = 0; 
+            updateTransform(); 
+        };
 
         // Даты
         document.getElementById('prevBtn').onclick = () => { if (currentIndex > 0) { currentIndex--; loadMap(); } };
