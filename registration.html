@@ -7,51 +7,45 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+    <!-- Навигация -->
 
-    <!-- Навигация (такая же как на главной) -->
-    <nav class="bg-[#002868] text-white sticky top-0 z-50 shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <i data-lucide="shield" class="text-[#f1c40f]"></i>
-                <span class="font-black text-xl uppercase tracking-tighter">State Portal</span>
-            </div>
-            <div class="hidden lg:flex items-center space-x-4">
-                <a href="index.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest">Главная</a>
-                <a href="news.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest">Новости</a>
-                <a href="registration.html" class="bg-white/10 text-[#f1c40f] px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest">Регистрация ID</a>
-                <a href="citizens.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest">Граждане</a>
-                <a href="business.html" class="hover:bg-white/5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-widest">Бизнесы</a>
-            </div>
+    <main class="max-w-5xl mx-auto px-4 py-12 w-full space-y-12">
+        <div class="text-center space-y-4">
+            <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Заявление на получение ID</h2>
+            <p class="text-slate-500 max-w-2xl mx-auto">Заполните форму ниже для регистрации в государственном реестре граждан штата San Andreas.</p>
         </div>
-    </nav>
 
-    <main class="max-w-4xl mx-auto px-4 py-12 flex-grow w-full">
-        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-200">
-            <div class="bg-[#002868] p-6 text-white flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <i data-lucide="file-signature" class="text-[#f1c40f]"></i>
-                    <span class="font-bold uppercase tracking-widest text-sm">Подача заявления на ID-карту</span>
-                </div>
-            </div>
-            <div class="p-10">
-                <div class="mb-10 text-center">
-                    <h3 class="text-3xl font-black text-slate-900 mb-4 uppercase tracking-tighter">Анкета гражданина</h3>
-                    <p class="text-slate-500">Заполните форму ниже. Ваша заявка будет рассмотрена Департаментом Юстиции в течение 24 часов.</p>
-                </div>
-                
-                <!-- ВСТАВЬТЕ ССЫЛКУ НА ВАШУ GOOGLE FORM НИЖЕ -->
-                <div class="bg-slate-50 rounded-3xl p-4 border-2 border-dashed border-slate-200">
-                    <iframe src="https://docs.google.com/forms/d/e/ВАШ_ID_ФОРМЫ/viewform?embedded=true" width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
+        <!-- Контейнер формы -->
+        <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 min-h-[800px] relative group">
+            <!-- Декоративная рамка -->
+            <div class="absolute inset-0 border-2 border-transparent group-hover:border-[#f1c40f]/20 rounded-[3rem] pointer-events-none transition-colors duration-500"></div>
+            
+            <iframe 
+                src="https://docs.google.com/forms/d/e/ВАШ_ID_ФОРМЫ/viewform?embedded=true" 
+                width="100%" 
+                height="800" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0"
+                class="relative z-10">
+                Загрузка…
+            </iframe>
+            
+            <div class="absolute inset-0 flex items-center justify-center bg-slate-50">
+                <div class="text-center p-12">
+                    <div class="w-20 h-20 bg-white rounded-3xl shadow-lg flex items-center justify-center mx-auto mb-8 animate-pulse">
+                        <i data-lucide="form-input" class="w-10 h-10 text-[#f1c40f]"></i>
+                    </div>
+                    <p class="text-slate-400 font-black uppercase tracking-[0.3em] text-[10px]">Инициализация защищенного соединения...</p>
                 </div>
             </div>
         </div>
     </main>
-
     <script>lucide.createIcons();</script>
 </body>
 </html>
