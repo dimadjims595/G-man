@@ -24,14 +24,21 @@
             user-select: none;
             -webkit-user-drag: none;
             transition: transform 0.1s ease-out;
-            transform-origin: center; /* Центрирование для стабильного зума */
+            transform-origin: center;
         }
 
+        /* Улучшенные кнопки управления */
         .control-btn {
-            @apply w-12 h-12 bg-[#002868] border-2 border-[#f1c40f] rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.5)] 
+            @apply w-14 h-14 bg-[#002868]/60 backdrop-blur-md border-2 border-[#f1c40f]/50 rounded-2xl shadow-2xl 
                    flex items-center justify-center text-[#f1c40f] active:scale-90 transition-all z-30;
         }
-        .control-btn i { @apply w-6 h-6; }
+        .control-btn:hover { @apply bg-[#002868]/80 border-[#f1c40f] scale-105; }
+        
+        /* Кружок вокруг иконки */
+        .icon-circle {
+            @apply w-10 h-10 rounded-full border border-[#f1c40f]/30 flex items-center justify-center bg-black/20;
+        }
+        .control-btn:hover .icon-circle { @apply border-[#f1c40f] bg-black/40; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
@@ -68,28 +75,57 @@
             </div>
         </div>
 
-        <div class="relative rounded-[2rem] shadow-2xl border-4 border-[#002868] h-[600px] md:h-[750px] map-viewport" id="mapViewport">
-            <!-- Карта центрирована по умолчанию -->
+        <div class="relative rounded-[2.5rem] shadow-2xl border-4 border-[#002868] h-[600px] md:h-[750px] map-viewport" id="mapViewport">
             <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта" class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             
             <!-- Кнопки перемещения -->
-            <div class="absolute bottom-6 left-6 flex flex-col items-center gap-2 z-30">
-                <button id="moveUp" class="control-btn"><i data-lucide="chevron-up"></i></button>
-                <div class="flex gap-2">
-                    <button id="moveLeft" class="control-btn"><i data-lucide="chevron-left"></i></button>
-                    <button id="moveDown" class="control-btn"><i data-lucide="chevron-down"></i></button>
-                    <button id="moveRight" class="control-btn"><i data-lucide="chevron-right"></i></button>
+            <div class="absolute bottom-6 left-6 flex flex-col items-center gap-3 z-30">
+                <button id="moveUp" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-up"></i></div></button>
+                <div class="flex gap-3">
+                    <button id="moveLeft" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-left"></i></div></button>
+                    <button id="moveDown" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-down"></i></div></button>
+                    <button id="moveRight" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-right"></i></div></button>
                 </div>
             </div>
 
             <!-- Управление зумом -->
-            <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-30">
-                <button id="zoomIn" class="control-btn"><i data-lucide="plus"></i></button>
-                <button id="zoomOut" class="control-btn"><i data-lucide="minus"></i></button>
-                <button id="resetView" class="control-btn"><i data-lucide="maximize"></i></button>
+            <div class="absolute bottom-6 right-6 flex flex-col gap-3 z-30">
+                <button id="zoomIn" class="control-btn"><div class="icon-circle"><i data-lucide="plus"></i></div></button>
+                <button id="zoomOut" class="control-btn"><div class="icon-circle"><i data-lucide="minus"></i></div></button>
+                <button id="resetView" class="control-btn"><div class="icon-circle"><i data-lucide="maximize"></i></div></button>
             </div>
         </div>
+
+        <!-- ПАНЕЛЬ ОТЛАДКИ -->
+        <div class="bg-slate-900 text-white p-4 rounded-2xl border border-white/10 shadow-xl mt-8">
+            <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Debug: Map Coordinates</span>
+            </div>
+            <div class="grid grid-cols-3 gap-4 font-mono text-xs">
+                <div class="bg-black/30 p-2 rounded-lg border border-white/5">
+                    <span class="text-slate-500 mr-2">X:</span>
+                    <span id="debugX" class="text-[#f1c40f]">0</span>
+                </div>
+                <div class="bg-black/30 p-2 rounded-lg border border-white/5">
+                    <span class="text-slate-500 mr-2">Y:</span>
+                    <span id="debugY" class="text-[#f1c40f]">0</span>
+                </div>
+                <div class="bg-black/30 p-2 rounded-lg border border-white/5">
+                    <span class="text-slate-500 mr-2">Scale:</span>
+                    <span id="debugScale" class="text-[#f1c40f]">1.0</span>
+                </div>
+            </div>
+            <p class="text-[9px] text-slate-500 mt-3 italic">Переместите карту в нужное положение и скопируйте эти значения для настройки стартового вида.</p>
+        </div>
     </main>
+
+    <footer class="bg-slate-900 text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6 text-[#f1c40f]"><i data-lucide="shield" class="w-8 h-8"></i><span class="font-black text-xl uppercase tracking-tighter text-white">State RP Project</span></div>
+            <p class="text-slate-600 text-[10px] uppercase font-bold tracking-widest">© 2026 San Andreas Government. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         lucide.createIcons();
@@ -97,7 +133,7 @@
         const maps = [
             { date: "1 марта 2024", image: "https://picsum.photos/seed/map1/2000/2000" },
             { date: "2 марта 2024", image: "https://picsum.photos/seed/map2/2000/2000" },
-            { date: "3 марта 2024", image: "map3.png" }
+            { date: "3 марта 2024", image: "https://picsum.photos/seed/map3/2000/2000" }
         ];
 
         let currentIndex = maps.length - 1;
@@ -108,12 +144,20 @@
         const viewport = document.getElementById('mapViewport');
         const mapImg = document.getElementById('mapImage');
         const dateEl = document.getElementById('currentDate');
+        
+        // Элементы отладки
+        const debugX = document.getElementById('debugX');
+        const debugY = document.getElementById('debugY');
+        const debugScale = document.getElementById('debugScale');
 
         function updateTransform() {
-            // Ограничение зума до 10x
             scale = Math.min(Math.max(0.1, scale), 10);
-            // Используем translate3d для лучшей производительности
             mapImg.style.transform = `translate3d(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px), 0) scale(${scale})`;
+            
+            // Обновление панели отладки
+            debugX.textContent = Math.round(translateX);
+            debugY.textContent = Math.round(translateY);
+            debugScale.textContent = scale.toFixed(2);
         }
 
         function loadMap() {
@@ -121,7 +165,7 @@
             dateEl.textContent = maps[currentIndex].date;
         }
 
-        // --- ТАЧСКРИН (ТЕЛЕФОНЫ) ---
+        // --- ТАЧСКРИН ---
         viewport.addEventListener('touchstart', (e) => {
             if (e.target.closest('button')) return;
             isDragging = true;
