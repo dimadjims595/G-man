@@ -38,12 +38,13 @@
     <main class="max-w-7xl mx-auto px-4 py-12 w-full space-y-8">
         <div class="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-slate-200 pb-8">
             <div>
-                <h2 class="text-4xl font-black text-[#002868] uppercase tracking-tighter">Реестр граждан</h2>
+                <h2 class="text-2xl md:text-4xl font-black text-[#002868] uppercase tracking-tighter">Реестр граждан</h2>
                 <p class="text-slate-500 mt-2">Список официально зарегистрированных жителей штата.</p>
             </div>
-            <div class="relative w-full md:w-72">
+            <!-- Поле поиска -->
+            <div class="relative w-full md:w-80">
                 <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                <input type="text" placeholder="Поиск по имени или ID..." class="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-[#002868] shadow-sm">
+                <input type="text" id="searchInput" placeholder="Поиск по имени или ID..." class="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-[#002868] shadow-sm transition-all">
             </div>
         </div>
 
@@ -73,6 +74,8 @@
     </footer>
 
     <script>
+        let allCitizens = []; // Хранилище для всех данных
+
         async function fetchCitizens() {
             const container = document.getElementById('citizensContainer');
             container.innerHTML = '<tr><td colspan="4" class="px-8 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">Загрузка реестра...</td></tr>';
@@ -80,28 +83,34 @@
             try {
                 const response = await fetch('citizens.json');
                 const data = await response.json();
-                
-                if (data.length === 0) {
-                    container.innerHTML = '<tr><td colspan="4" class="px-8 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">Реестр пуст</td></tr>';
-                    return;
-                }
-
-                container.innerHTML = data.map(citizen => `
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-8 py-6 font-mono text-xs text-[#002868]">${citizen.id}</td>
-                        <td class="px-8 py-6 font-bold text-slate-700">${citizen.name}</td>
-                        <td class="px-8 py-6 text-sm text-slate-500">${citizen.job}</td>
-                        <td class="px-8 py-6">
-                            <span class="${getStatusClass(citizen.status)} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                                ${citizen.status}
-                            </span>
-                        </td>
-                    </tr>
-                `).join('');
+                allCitizens = Array.isArray(data) ? data : [];
+                renderCitizens(allCitizens);
             } catch (error) {
                 console.error('Error:', error);
-                container.innerHTML = '<tr><td colspan="4" class="px-8 py-20 text-center text-red-500 font-bold uppercase tracking-widest text-[10px]">Ошибка загрузки</td></tr>';
+                container.innerHTML = '<tr><td colspan="4" class="px-8 py-20 text-center text-red-500 font-bold uppercase tracking-widest text-[10px]">Ошибка загрузки данных</td></tr>';
             }
+        }
+
+        function renderCitizens(citizens) {
+            const container = document.getElementById('citizensContainer');
+            
+            if (citizens.length === 0) {
+                container.innerHTML = '<tr><td colspan="4" class="px-8 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">Граждане не найдены</td></tr>';
+                return;
+            }
+
+            container.innerHTML = citizens.map(citizen => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-8 py-6 font-mono text-xs text-[#002868] font-bold">#${citizen.id}</td>
+                    <td class="px-8 py-6 font-bold text-slate-700">${citizen.name}</td>
+                    <td class="px-8 py-6 text-sm text-slate-500">${citizen.job || '—'}</td>
+                    <td class="px-8 py-6">
+                        <span class="${getStatusClass(citizen.status)} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                            ${citizen.status || 'Неизвестно'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
         }
 
         function getStatusClass(status) {
@@ -112,6 +121,17 @@
                 default: return 'bg-slate-100 text-slate-700';
             }
         }
+
+        // Логика поиска
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allCitizens.filter(citizen => {
+                const nameMatch = citizen.name.toLowerCase().includes(term);
+                const idMatch = citizen.id.toString().includes(term);
+                return nameMatch || idMatch;
+            });
+            renderCitizens(filtered);
+        });
 
         fetchCitizens();
         lucide.createIcons();
