@@ -43,61 +43,16 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <!-- Список новостей -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Новость 1 -->
-                <article class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100">
-                    <img src="https://picsum.photos/seed/news1/800/400" alt="News" class="w-full h-64 object-cover">
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="bg-blue-100 text-[#002868] text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Указ</span>
-                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">15 Марта 2024</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-4 leading-tight">Новые правила регистрации транспортных средств</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6">
-                            Губернатор штата подписал указ об упрощении процедуры регистрации личного транспорта. Теперь подать заявление можно через онлайн-портал...
-                        </p>
-                        <button class="text-[#002868] font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:gap-4 transition-all">
-                            Читать полностью <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Новость 2 -->
-                <article class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100">
-                    <img src="https://picsum.photos/seed/news2/800/400" alt="News" class="w-full h-64 object-cover">
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Экономика</span>
-                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">12 Марта 2024</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-4 leading-tight">Снижение налоговой ставки для малого бизнеса</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6">
-                            В рамках программы поддержки предпринимательства, правительство объявляет о временном снижении налогов для новых предприятий...
-                        </p>
-                        <button class="text-[#002868] font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:gap-4 transition-all">
-                            Читать полностью <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </article>
+            <div id="newsContainer" class="lg:col-span-2 space-y-8">
+                <!-- Новости будут загружены через JS -->
             </div>
 
             <!-- Боковая панель -->
             <aside class="space-y-8">
                 <div class="bg-[#002868] text-white p-8 rounded-[2.5rem] shadow-xl">
                     <h4 class="text-[#f1c40f] font-black uppercase tracking-widest text-xs mb-6">Категории</h4>
-                    <ul class="space-y-4">
-                        <li class="flex justify-between items-center text-sm">
-                            <span class="font-bold">Указы</span>
-                            <span class="bg-white/10 px-2 py-1 rounded-md text-[10px]">12</span>
-                        </li>
-                        <li class="flex justify-between items-center text-sm">
-                            <span class="font-bold">Экономика</span>
-                            <span class="bg-white/10 px-2 py-1 rounded-md text-[10px]">8</span>
-                        </li>
-                        <li class="flex justify-between items-center text-sm">
-                            <span class="font-bold">Безопасность</span>
-                            <span class="bg-white/10 px-2 py-1 rounded-md text-[10px]">15</span>
-                        </li>
+                    <ul id="categoryList" class="space-y-4">
+                        <!-- Категории будут загружены через JS -->
                     </ul>
                 </div>
 
@@ -117,8 +72,155 @@
         </div>
     </footer>
 
+    <!-- Модальное окно новости -->
+    <div id="newsModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="bg-white w-full max-w-3xl max-h-[90vh] rounded-[2.5rem] shadow-2xl overflow-hidden pointer-events-auto flex flex-col">
+                <div class="relative h-64 md:h-80 shrink-0">
+                    <img id="modalImage" src="" alt="News" class="w-full h-full object-cover">
+                    <button onclick="closeModal()" class="absolute top-6 right-6 bg-white/20 hover:bg-white/40 backdrop-blur-md text-white p-2 rounded-full transition-all">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <div class="p-8 md:p-12 overflow-y-auto">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span id="modalCategory" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full"></span>
+                        <span id="modalDate" class="text-slate-400 text-[10px] font-bold uppercase tracking-widest"></span>
+                    </div>
+                    <h3 id="modalTitle" class="text-3xl md:text-4xl font-black text-[#002868] uppercase tracking-tighter mb-8 leading-tight"></h3>
+                    <div id="modalContent" class="text-slate-600 leading-relaxed space-y-4 text-lg">
+                        <!-- Контент новости -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        lucide.createIcons();
+        let newsData = [];
+
+        async function fetchNews() {
+            const container = document.getElementById('newsContainer');
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-20 gap-4">
+                    <i data-lucide="loader-2" class="w-10 h-10 text-[#f1c40f] animate-spin"></i>
+                    <span class="text-[#002868] font-black uppercase tracking-widest text-xs">Загрузка новостей...</span>
+                </div>
+            `;
+            lucide.createIcons();
+
+            try {
+                const response = await fetch('news.json');
+                if (!response.ok) throw new Error('Failed to load news');
+                const data = await response.json();
+                
+                // Обработка разных форматов JSON (массив или объект с ключом news)
+                newsData = Array.isArray(data) ? data : (data.news || []);
+                
+                renderNews();
+                renderCategories();
+            } catch (error) {
+                console.error('Error loading news:', error);
+                container.innerHTML = `
+                    <div class="bg-red-50 border border-red-100 p-8 rounded-[2.5rem] text-center">
+                        <i data-lucide="alert-circle" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
+                        <h4 class="text-red-900 font-black uppercase tracking-tighter text-xl mb-2">Ошибка загрузки</h4>
+                        <p class="text-red-700 text-sm">Не удалось загрузить ленту новостей. Пожалуйста, попробуйте позже.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        const categoryColors = {
+            'Указ': 'bg-blue-100 text-[#002868]',
+            'Экономика': 'bg-emerald-100 text-emerald-700',
+            'Безопасность': 'bg-red-100 text-red-700',
+            'Общество': 'bg-amber-100 text-amber-700',
+            'Другое': 'bg-slate-100 text-slate-700'
+        };
+
+        function renderCategories() {
+            const categoryList = document.getElementById('categoryList');
+            const counts = {};
+            
+            newsData.forEach(news => {
+                counts[news.category] = (counts[news.category] || 0) + 1;
+            });
+
+            if (Object.keys(counts).length === 0) {
+                categoryList.innerHTML = '<li class="text-white/40 text-[10px] uppercase font-bold">Категорий нет</li>';
+                return;
+            }
+
+            categoryList.innerHTML = Object.entries(counts).map(([cat, count]) => `
+                <li class="flex justify-between items-center text-sm">
+                    <span class="font-bold">${cat}</span>
+                    <span class="bg-white/10 px-2 py-1 rounded-md text-[10px]">${count}</span>
+                </li>
+            `).join('');
+        }
+
+        function renderNews() {
+            const container = document.getElementById('newsContainer');
+            if (newsData.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-12 rounded-[2.5rem] shadow-xl border border-slate-100 text-center">
+                        <i data-lucide="newspaper" class="w-12 h-12 text-slate-200 mx-auto mb-4"></i>
+                        <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Новостей пока нет.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            container.innerHTML = newsData.map(news => {
+                const catClass = categoryColors[news.category] || 'bg-slate-100 text-slate-700';
+                return `
+                    <article class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100 group cursor-pointer hover:shadow-2xl transition-all" onclick="openNews(${news.id})">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-4">
+                                <span class="${catClass} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">${news.category}</span>
+                                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">${news.date}</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tighter mb-4 leading-tight group-hover:text-blue-600 transition-colors">${news.title}</h3>
+                            <p class="text-slate-600 leading-relaxed mb-6">
+                                ${news.preview}
+                            </p>
+                            <button class="text-[#002868] font-black uppercase tracking-widest text-[10px] flex items-center gap-2 group-hover:gap-4 transition-all">
+                                Читать полностью <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function openNews(id) {
+            const news = newsData.find(n => n.id === id);
+            if (!news) return;
+
+            const catClass = categoryColors[news.category] || 'bg-slate-100 text-slate-700';
+
+            document.getElementById('modalImage').src = news.image;
+            document.getElementById('modalTitle').textContent = news.title;
+            document.getElementById('modalDate').textContent = news.date;
+            document.getElementById('modalCategory').textContent = news.category;
+            document.getElementById('modalCategory').className = `${catClass} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full`;
+            document.getElementById('modalContent').innerHTML = news.content;
+
+            const modal = document.getElementById('newsModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        fetchNews();
     </script>
 </body>
 </html>
