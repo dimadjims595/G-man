@@ -1,0 +1,29 @@
+backend:
+  name: git-gateway
+  branch: main # Убедитесь, что ваша ветка на GitHub называется main
+
+media_folder: "assets/news" # Папка для загрузки картинок
+public_folder: "/assets/news"
+
+collections:
+  - name: "settings"
+    label: "Контент"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "news_list"
+        label: "Список новостей"
+        file: "news.json" # Редактируем ваш файл с новостями
+        allow_add: true
+        fields:
+          - name: "news"
+            label: "Новости"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "number", default: 1 }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Дата", name: "date", widget: "string", hint: "Например: 07 Марта 2026" }
+              - { label: "Категория", name: "category", widget: "select", options: ["Указ", "Событие", "Важное", "Безопасность"] }
+              - { label: "Изображение", name: "image", widget: "image" }
+              - { label: "Текст новости", name: "description", widget: "text" }
