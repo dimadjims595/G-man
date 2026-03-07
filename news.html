@@ -19,7 +19,7 @@
             <div class="flex items-center gap-4">
                 <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
                 <div class="flex flex-col">
-                    <span class="font-black text-xl uppercase md:tracking-tighter tracking-tight leading-none">State Portal</span>
+                    <span class="font-black text-xl uppercase tracking-tighter leading-none">State Portal</span>
                     <span class="text-[10px] uppercase tracking-[0.2em] text-[#f1c40f] font-bold">San Andreas Gov</span>
                 </div>
             </div>
@@ -44,7 +44,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <!-- Список новостей -->
             <div id="newsContainer" class="lg:col-span-2 space-y-8">
-                <!-- Новости будут загружены через JS -->
+                <div class="flex flex-col items-center justify-center py-20 gap-4">
+                    <i data-lucide="loader-2" class="w-10 h-10 text-[#f1c40f] animate-spin"></i>
+                    <span class="text-[#002868] font-black uppercase tracking-widest text-xs">Загрузка новостей...</span>
+                </div>
             </div>
 
             <!-- Боковая панель -->
@@ -74,39 +77,6 @@
 
     <script>
         let newsData = [];
-
-        async function fetchNews() {
-            const container = document.getElementById('newsContainer');
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center py-20 gap-4">
-                    <i data-lucide="loader-2" class="w-10 h-10 text-[#f1c40f] animate-spin"></i>
-                    <span class="text-[#002868] font-black uppercase tracking-widest text-xs">Загрузка новостей...</span>
-                </div>
-            `;
-            lucide.createIcons();
-
-            try {
-                const response = await fetch('news.json');
-                if (!response.ok) throw new Error('Failed to load news');
-                const data = await response.json();
-                
-                newsData = Array.isArray(data) ? data : (data.news || []);
-                
-                renderNews();
-                renderCategories();
-            } catch (error) {
-                console.error('Error loading news:', error);
-                container.innerHTML = `
-                    <div class="bg-red-50 border border-red-100 p-8 rounded-[2.5rem] text-center">
-                        <i data-lucide="alert-circle" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
-                        <h4 class="text-red-900 font-black uppercase tracking-tighter text-xl mb-2">Ошибка загрузки</h4>
-                        <p class="text-red-700 text-sm">Не удалось загрузить ленту новостей. Пожалуйста, попробуйте позже.</p>
-                    </div>
-                `;
-                lucide.createIcons();
-            }
-        }
-
         const categoryColors = {
             'Указ': 'bg-blue-100 text-[#002868]',
             'Экономика': 'bg-emerald-100 text-emerald-700',
@@ -115,19 +85,23 @@
             'Другое': 'bg-slate-100 text-slate-700'
         };
 
+        async function fetchNews() {
+            const container = document.getElementById('newsContainer');
+            try {
+                const response = await fetch('news.json');
+                const data = await response.json();
+                newsData = Array.isArray(data) ? data : (data.news || []);
+                renderNews();
+                renderCategories();
+            } catch (error) {
+                container.innerHTML = '<p class="text-center py-20 text-slate-400">Ошибка загрузки новостей</p>';
+            }
+        }
+
         function renderCategories() {
             const categoryList = document.getElementById('categoryList');
             const counts = {};
-            
-            newsData.forEach(news => {
-                counts[news.category] = (counts[news.category] || 0) + 1;
-            });
-
-            if (Object.keys(counts).length === 0) {
-                categoryList.innerHTML = '<li class="text-white/40 text-[10px] uppercase font-bold">Категорий нет</li>';
-                return;
-            }
-
+            newsData.forEach(news => { counts[news.category] = (counts[news.category] || 0) + 1; });
             categoryList.innerHTML = Object.entries(counts).map(([cat, count]) => `
                 <li class="flex justify-between items-center text-sm">
                     <span class="font-bold">${cat}</span>
@@ -139,39 +113,34 @@
         function renderNews() {
             const container = document.getElementById('newsContainer');
             if (newsData.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-white p-12 rounded-[2.5rem] shadow-xl border border-slate-100 text-center">
-                        <i data-lucide="newspaper" class="w-12 h-12 text-slate-200 mx-auto mb-4"></i>
-                        <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Новостей пока нет.</p>
-                    </div>
-                `;
-                lucide.createIcons();
+                container.innerHTML = '<p class="text-center py-20 text-slate-400">Новостей пока нет</p>';
                 return;
             }
-            container.innerHTML = newsData.map(news => {
-                const catClass = categoryColors[news.category] || 'bg-slate-100 text-slate-700';
-                return `
-                    <article class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100 group cursor-pointer hover:shadow-2xl transition-all" onclick="location.href='news-item.html?id=${news.id}'">
-                        <div class="relative h-64 overflow-hidden">
-                            <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            // Сортировка: закрепленные новости всегда вверху
+            const sortedNews = [...newsData].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+
+            container.innerHTML = sortedNews.map(news => `
+                <article class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border ${news.pinned ? 'border-amber-200' : 'border-slate-100'} group cursor-pointer hover:shadow-2xl transition-all relative" onclick="location.href='news-item.html?id=${news.id}'">
+                    ${news.pinned ? `
+                        <div class="absolute top-6 right-6 z-10 bg-amber-400 text-white p-2 rounded-full shadow-lg">
+                            <i data-lucide="pin" class="w-4 h-4"></i>
                         </div>
-                        <div class="p-8">
-                            <div class="flex items-center gap-4 mb-4">
-                                <span class="${catClass} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">${news.category}</span>
-                                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">${news.date}</span>
-                            </div>
-                            <h3 class="text-2xl font-black text-[#002868] uppercase md:tracking-tighter tracking-tight mb-4 leading-tight group-hover:text-blue-600 transition-colors">${news.title}</h3>
-                            <p class="text-slate-600 leading-relaxed mb-6">
-                                ${news.preview}
-                            </p>
-                            <a href="news-item.html?id=${news.id}" class="text-[#002868] font-black uppercase tracking-widest text-[10px] flex items-center gap-2 group-hover:gap-4 transition-all">
-                                Читать полностью <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
+                    ` : ''}
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${news.image}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="${categoryColors[news.category] || 'bg-slate-100'} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">${news.category}</span>
+                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">${news.date}</span>
                         </div>
-                    </article>
-                `;
-            }).join('');
+                        <h3 class="text-2xl font-black text-[#002868] uppercase md:tracking-tighter tracking-tight mb-4 leading-tight group-hover:text-blue-600 transition-colors">${news.title}</h3>
+                        <p class="text-slate-600 leading-relaxed mb-6">${news.preview}</p>
+                        <span class="text-[#002868] font-black uppercase tracking-widest text-[10px] flex items-center gap-2">Читать полностью <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                    </div>
+                </article>
+            `).join('');
             lucide.createIcons();
         }
 
