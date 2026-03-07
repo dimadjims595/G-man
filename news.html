@@ -19,7 +19,7 @@
             <div class="flex items-center gap-4">
                 <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
                 <div class="flex flex-col">
-                    <span class="font-black text-xl uppercase md:tracking-tighter tracking-tight leading-none">State Portal</span>
+                    <span class="font-black text-xl uppercase tracking-tight leading-none">State Portal</span>
                     <span class="text-[10px] uppercase tracking-[0.2em] text-[#f1c40f] font-bold">San Andreas Gov</span>
                 </div>
             </div>
@@ -36,21 +36,21 @@
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 py-12 w-full">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <div class="space-y-4">
+        <!-- Уменьшенный заголовок -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-slate-200 pb-10">
+            <div class="space-y-3">
                 <span class="text-[#f1c40f] text-[10px] font-black uppercase tracking-[0.3em]">Пресс-служба</span>
-                <h1 class="text-5xl md:text-7xl font-black text-[#002868] uppercase md:tracking-tighter tracking-tight leading-none">
+                <h1 class="text-3xl md:text-5xl font-black text-[#002868] uppercase tracking-tight leading-none">
                     Новости <br> Правительства
                 </h1>
             </div>
-            <p class="text-slate-400 max-w-md text-sm font-medium leading-relaxed">
-                Официальные указы, экономические сводки и важные объявления штата San Andreas в одном месте.
+            <p class="text-slate-400 max-w-sm text-xs font-medium leading-relaxed">
+                Официальные сводки, указы и важные объявления штата San Andreas.
             </p>
         </div>
 
-        <!-- Сетка новостей -->
+        <!-- Сетка новостей на всю ширину -->
         <div id="newsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Контент загружается через JS -->
             <div class="col-span-full flex justify-center py-20">
                 <i data-lucide="loader-2" class="w-10 h-10 text-[#f1c40f] animate-spin"></i>
             </div>
@@ -72,34 +72,25 @@
             'Другое': 'bg-slate-100 text-slate-700'
         };
 
-        let newsData = [];
-
         async function fetchNews() {
             try {
                 const response = await fetch('news.json');
                 const data = await response.json();
-                newsData = Array.isArray(data) ? data : (data.news || []);
-                renderNews();
+                const newsData = Array.isArray(data) ? data : (data.news || []);
+                renderNews(newsData);
             } catch (error) {
-                console.error('Error fetching news:', error);
+                console.error('Error:', error);
                 document.getElementById('newsContainer').innerHTML = '<p class="col-span-full text-center py-20 text-red-500 font-bold">Ошибка при загрузке новостей.</p>';
             }
         }
 
-        function renderNews() {
+        function renderNews(newsData) {
             const container = document.getElementById('newsContainer');
             if (newsData.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-white p-12 rounded-[2.5rem] shadow-xl border border-slate-100 text-center">
-                        <i data-lucide="newspaper" class="w-12 h-12 text-slate-200 mx-auto mb-4"></i>
-                        <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Новостей пока нет.</p>
-                    </div>
-                `;
-                lucide.createIcons();
+                container.innerHTML = '<p class="col-span-full text-center py-20 text-slate-400">Новостей пока нет.</p>';
                 return;
             }
 
-            // Сортировка: сначала закрепленные (pinned), затем остальные
             const sortedNews = [...newsData].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
             container.innerHTML = sortedNews.map(news => {
@@ -115,20 +106,19 @@
                         ` : ''}
                         <div class="relative h-64 overflow-hidden">
                             <img src="${imageUrl}" alt="${news.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="p-8">
                             <div class="flex items-center gap-4 mb-4">
                                 <span class="${catClass} text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">${news.category}</span>
                                 <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">${news.date}</span>
                             </div>
-                            <h3 class="text-2xl font-black text-[#002868] uppercase md:tracking-tighter tracking-tight mb-4 leading-tight group-hover:text-blue-600 transition-colors">${news.title}</h3>
-                            <p class="text-slate-600 leading-relaxed mb-6">
+                            <h3 class="text-2xl font-black text-[#002868] uppercase tracking-tight mb-4 leading-tight group-hover:text-blue-600 transition-colors">${news.title}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3">
                                 ${news.preview}
                             </p>
-                            <a href="news-item.html?id=${news.id}" class="text-[#002868] font-black uppercase tracking-widest text-[10px] flex items-center gap-2 group-hover:gap-4 transition-all">
+                            <span class="text-[#002868] font-black uppercase tracking-widest text-[10px] flex items-center gap-2 group-hover:gap-4 transition-all">
                                 Читать полностью <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
+                            </span>
                         </div>
                     </article>
                 `;
@@ -137,7 +127,6 @@
         }
 
         fetchNews();
-        lucide.createIcons();
     </script>
 </body>
 </html>
