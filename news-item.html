@@ -11,7 +11,6 @@
         body { font-family: 'Inter', sans-serif; }
         .markdown-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .markdown-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
-        .markdown-content li { margin-bottom: 0.5rem; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
@@ -22,7 +21,7 @@
             <div class="flex items-center gap-4">
                 <i data-lucide="shield" class="text-[#f1c40f] w-8 h-8"></i>
                 <div class="flex flex-col">
-                    <span class="font-black text-xl uppercase md:tracking-tighter tracking-tight leading-none">State Portal</span>
+                    <span class="font-black text-xl uppercase tracking-tight leading-none">State Portal</span>
                     <span class="text-[10px] uppercase tracking-[0.2em] text-[#f1c40f] font-bold">San Andreas Gov</span>
                 </div>
             </div>
@@ -43,11 +42,10 @@
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Назад к новостям
         </a>
 
-        <div id="newsContent" class="space-y-8 animate-in fade-in duration-700">
-            <!-- Контент загрузится через JS -->
+        <div id="newsContent" class="space-y-8">
             <div class="flex flex-col items-center justify-center py-20 gap-4">
                 <i data-lucide="loader-2" class="w-10 h-10 text-[#f1c40f] animate-spin"></i>
-                <span class="text-[#002868] font-black uppercase tracking-widest text-xs">Загрузка новости...</span>
+                <span class="text-[#002868] font-black uppercase tracking-widest text-xs">Загрузка...</span>
             </div>
         </div>
     </main>
@@ -73,7 +71,7 @@
             const container = document.getElementById('newsContent');
 
             if (!id) {
-                container.innerHTML = '<p class="text-center py-20">Новость не найдена.</p>';
+                container.innerHTML = '<p class="text-center py-20">Новость не указана.</p>';
                 return;
             }
 
@@ -90,11 +88,11 @@
 
                 document.getElementById('pageTitle').textContent = `${news.title} | San Andreas Gov`;
                 const catClass = categoryColors[news.category] || 'bg-slate-100 text-slate-700';
-
                 const imageUrl = news.image || 'https://picsum.photos/seed/state/800/600';
+
                 container.innerHTML = `
-                    <div class="space-y-8">
-                        <div class="relative h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl">
+                    <div class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div class="relative h-[300px] md:h-[450px] rounded-[2.5rem] overflow-hidden shadow-2xl mb-10">
                             <img src="${imageUrl}" alt="${news.title}" class="w-full h-full object-cover">
                         </div>
                         
@@ -104,11 +102,11 @@
                                 <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">${news.date}</span>
                             </div>
                             
-                            <h1 class="text-4xl md:text-6xl font-black text-[#002868] uppercase md:tracking-tighter tracking-tight leading-tight">
+                            <h1 class="text-3xl md:text-6xl font-black text-[#002868] uppercase tracking-tight leading-tight">
                                 ${news.title}
                             </h1>
                             
-                            <div class="markdown-content text-slate-600 text-lg md:text-xl leading-relaxed">
+                            <div class="markdown-content text-slate-600 text-lg md:text-xl leading-relaxed pt-6 border-t border-slate-100">
                                 ${news.content}
                             </div>
                         </div>
@@ -117,12 +115,11 @@
                 lucide.createIcons();
             } catch (error) {
                 console.error('Error:', error);
-                container.innerHTML = '<p class="text-center py-20 text-red-500">Ошибка при загрузке новости.</p>';
+                container.innerHTML = '<p class="text-center py-20 text-red-500">Ошибка загрузки.</p>';
             }
         }
 
         loadNewsItem();
-        lucide.createIcons();
     </script>
 </body>
 </html>
