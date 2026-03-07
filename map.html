@@ -27,7 +27,6 @@
             transform-origin: center;
         }
 
-        /* Улучшенные кнопки управления с эффектом стекла */
         .control-btn {
             width: 3.5rem;
             height: 3.5rem;
@@ -52,7 +51,6 @@
             box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
         }
         
-        /* Кружок вокруг иконки */
         .icon-circle {
             width: 2.25rem;
             height: 2.25rem;
@@ -169,7 +167,6 @@
             { date: "6 марта 2026", image: "map3.png" }
         ];
 
-        // УСТАНОВЛЕННЫЕ ПОЛЬЗОВАТЕЛЕМ КООРДИНАТЫ
         let currentIndex = maps.length - 1;
         let scale = 8.00;
         let translateX = 963;
@@ -182,16 +179,30 @@
         const mapImg = document.getElementById('mapImage');
         const dateEl = document.getElementById('currentDate');
         
-        // Элементы отладки
         const debugX = document.getElementById('debugX');
         const debugY = document.getElementById('debugY');
         const debugScale = document.getElementById('debugScale');
 
         function updateTransform() {
+            // Ограничение масштаба
             scale = Math.min(Math.max(0.1, scale), 10);
+
+            // Размеры вьюпорта и scaled-карты (6144 - базовый размер)
+            const vWidth = viewport.clientWidth;
+            const vHeight = viewport.clientHeight;
+            const imgSize = 6144 * scale;
+
+            // Расчет максимально допустимого смещения от центра
+            // Если карта больше экрана, ограничиваем края. Если меньше - центрируем (maxTx = 0)
+            let maxTx = Math.max(0, (imgSize - vWidth) / 2);
+            let maxTy = Math.max(0, (imgSize - vHeight) / 2);
+
+            // Применяем ограничения перемещения
+            translateX = Math.min(Math.max(-maxTx, translateX), maxTx);
+            translateY = Math.min(Math.max(-maxTy, translateY), maxTy);
+
             mapImg.style.transform = `translate3d(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px), 0) scale(${scale})`;
             
-            // Обновление панели координат
             debugX.textContent = Math.round(translateX);
             debugY.textContent = Math.round(translateY);
             debugScale.textContent = scale.toFixed(2);
@@ -245,6 +256,9 @@
 
         document.getElementById('prevBtn').onclick = () => { if (currentIndex > 0) { currentIndex--; loadMap(); } };
         document.getElementById('nextBtn').onclick = () => { if (currentIndex < maps.length - 1) { currentIndex++; loadMap(); } };
+
+        // Следим за изменением размера окна
+        window.addEventListener('resize', updateTransform);
 
         loadMap();
         updateTransform();
