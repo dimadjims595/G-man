@@ -1,8 +1,8 @@
 backend:
   name: git-gateway
-  branch: main # Убедитесь, что ваша ветка на GitHub называется main
+  branch: main
 
-media_folder: "assets/news" # Папка для загрузки картинок
+media_folder: "assets/news"
 public_folder: "/assets/news"
 
 collections:
@@ -14,7 +14,7 @@ collections:
     files:
       - name: "news_list"
         label: "Список новостей"
-        file: "news.json" # Редактируем ваш файл с новостями
+        file: "news.json"
         allow_add: true
         fields:
           - name: "news"
@@ -23,7 +23,11 @@ collections:
             fields:
               - { label: "ID", name: "id", widget: "number", default: 1 }
               - { label: "Заголовок", name: "title", widget: "string" }
-              - { label: "Дата", name: "date", widget: "string", hint: "Например: 07 Марта 2026" }
-              - { label: "Категория", name: "category", widget: "select", options: ["Указ", "Событие", "Важное", "Безопасность"] }
-              - { label: "Изображение", name: "image", widget: "image" }
-              - { label: "Текст новости", name: "description", widget: "text" }
+              - { label: "Дата", name: "date", widget: "string", hint: "Например: 15 Марта 2024" }
+              - label: "Категория"
+                name: "category"
+                widget: "select"
+                options: ["Указ", "Экономика", "Безопасность", "Общество", "Другое"]
+              - { label: "Изображение (URL)", name: "image", widget: "image" }
+              - { label: "Краткое описание", name: "preview", widget: "text", hint: "Отображается в списке новостей" }
+              - { label: "Полный текст (HTML)", name: "content", widget: "markdown", hint: "Можно использовать HTML теги <p>, <ul>, <li>" }
