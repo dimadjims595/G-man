@@ -108,18 +108,16 @@
         </div>
 
         <div class="relative rounded-[2.5rem] shadow-2xl border-4 border-[#002868] h-[600px] md:h-[750px] map-viewport" id="mapViewport">
-            <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта" class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            
-            <!-- Кнопки перемещения -->
-            <div class="absolute bottom-6 left-6 flex flex-col items-center gap-3 z-30">
-                <button id="moveUp" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-up"></i></div></button>
-                <div class="flex gap-3">
-                    <button id="moveLeft" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-left"></i></div></button>
-                    <button id="moveDown" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-down"></i></div></button>
-                    <button id="moveRight" class="control-btn"><div class="icon-circle"><i data-lucide="chevron-right"></i></div></button>
+            <!-- Текст загрузки на фоне -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="flex flex-col items-center gap-4">
+                    <i data-lucide="loader-2" class="w-8 h-8 text-[#f1c40f] animate-spin"></i>
+                    <span class="text-[#f1c40f] font-black uppercase tracking-widest text-xs animate-pulse">Ожидайте, идёт загрузка...</span>
                 </div>
             </div>
 
+            <img id="mapImage" src="" referrerpolicy="no-referrer" alt="Карта" class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            
             <!-- Управление зумом -->
             <div class="absolute bottom-6 right-6 flex flex-col gap-3 z-30">
                 <button id="zoomIn" class="control-btn"><div class="icon-circle"><i data-lucide="plus"></i></div></button>
@@ -241,12 +239,6 @@
         window.addEventListener('mouseup', () => { isDragging = false; });
 
         // --- КНОПКИ ---
-        const moveStep = 150;
-        document.getElementById('moveUp').onclick = (e) => { e.stopPropagation(); translateY += moveStep; updateTransform(); };
-        document.getElementById('moveDown').onclick = (e) => { e.stopPropagation(); translateY -= moveStep; updateTransform(); };
-        document.getElementById('moveLeft').onclick = (e) => { e.stopPropagation(); translateX += moveStep; updateTransform(); };
-        document.getElementById('moveRight').onclick = (e) => { e.stopPropagation(); translateX -= moveStep; updateTransform(); };
-
         document.getElementById('zoomIn').onclick = (e) => { e.stopPropagation(); scale += 0.5; updateTransform(); };
         document.getElementById('zoomOut').onclick = (e) => { e.stopPropagation(); scale = Math.max(0.1, scale - 0.5); updateTransform(); };
         document.getElementById('resetView').onclick = (e) => { e.stopPropagation(); scale = 1; translateX = 0; translateY = 0; updateTransform(); };
